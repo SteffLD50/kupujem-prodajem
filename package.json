@@ -1,0 +1,15 @@
+{
+    "name": "kupujemprodajem",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "cypress": ".\\node_modules\\.bin\\cypress open",
+        "cyHeadless": ".\\node_modules\\.bin\\cypress run"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "cypress": "^12.9.0"
+    }
+}
