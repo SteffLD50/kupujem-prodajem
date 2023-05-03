@@ -1,3 +1,5 @@
+import { viewAdPage } from "./viewAdPagePOM";
+
 class PostavljanjeOglasaPage {
     get headerStepper() {
         return cy.get(".StepperCircle_stepper__sRQmy");
@@ -71,6 +73,9 @@ class PostavljanjeOglasaPage {
         cy.intercept("POST", `${Cypress.env("apiUrl")}/file`).as(
             "uploadImages"
         );
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/eds/save`).as(
+            "getSavedAd"
+        );
         // 1. Izbor kategorije
         this.adTypeSelect.eq(adType).check();
         this.adCategoryInput.type(adCategory).type("{enter}");
@@ -112,6 +117,10 @@ class PostavljanjeOglasaPage {
         });
         this.termsAndConditionsCheckbox.check({ force: true });
         this.headerPostAnAdBtn.click();
+        cy.wait("@getSavedAd").then((interception) => {
+            expect(interception.response.statusCode).eq(200);
+            viewAdPage.adTitle.should("contain.text", adTitle);
+        });
     }
 }
 

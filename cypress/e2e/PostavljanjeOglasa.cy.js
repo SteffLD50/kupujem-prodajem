@@ -3,7 +3,6 @@
 import { loginPage } from "../POM/loginPagePOM";
 import { mojiOglasiPage } from "../POM/mojiOglasiPagePOM";
 import { postavljanjeOglasaPage } from "../POM/postavljanjeOglasaPagePOM";
-import { viewAdPage } from "../POM/viewAdPagePOM";
 
 describe("Postavljanje oglasa", () => {
     beforeEach("Programmatic Login", () => {
@@ -45,9 +44,6 @@ describe("Postavljanje oglasa", () => {
     });
 
     it("Miš Scorpion M207 - Marvo", () => {
-        cy.intercept("POST", `${Cypress.env("apiUrl")}/eds/save`).as(
-            "getSavedAd"
-        );
         postavljanjeOglasaPage.postavljanjeOglasa(
             0,
             "Kompjuteri | Desktop",
@@ -62,19 +58,9 @@ describe("Postavljanje oglasa", () => {
                 "cypress/fixtures/PC/Miš Scorpion M207 - Marvo/2.jpg",
             ]
         );
-        cy.wait("@getSavedAd").then((interception) => {
-            expect(interception.response.statusCode).eq(200);
-            viewAdPage.adTitle.should(
-                "contain.text",
-                "Miš Scorpion M207 - Marvo"
-            );
-        });
     });
 
     it("Procesor Intel Core i7-6700 - 3.40 GHz", () => {
-        cy.intercept("POST", `${Cypress.env("apiUrl")}/eds/save`).as(
-            "getSavedAd"
-        );
         postavljanjeOglasaPage.postavljanjeOglasa(
             0,
             "Kompjuteri | Desktop",
@@ -90,19 +76,9 @@ describe("Postavljanje oglasa", () => {
                 "cypress/fixtures/PC/Procesor Intel Core i7-6700 - 3.40 GHz/3.jpg",
             ]
         );
-        cy.wait("@getSavedAd").then((interception) => {
-            expect(interception.response.statusCode).eq(200);
-            viewAdPage.adTitle.should(
-                "contain.text",
-                "Procesor Intel Core i7-6700 - 3.40 GHz"
-            );
-        });
     });
 
     it("Slika - Paukova školjka", () => {
-        cy.intercept("POST", `${Cypress.env("apiUrl")}/eds/save`).as(
-            "getSavedAd"
-        );
         postavljanjeOglasaPage.postavljanjeOglasa(
             0,
             "Kolekcionarstvo",
@@ -114,19 +90,9 @@ describe("Postavljanje oglasa", () => {
             "Slika / suvenir - Paukova školjka (Lambis scorpius)\n\nDimenzije uključujući ram: 13 x 18cm\n\nMože i uplata na račun radi jeftinije poštarine.",
             ["cypress/fixtures/Slika - Paukova školjka/1.jpg"]
         );
-        cy.wait("@getSavedAd").then((interception) => {
-            expect(interception.response.statusCode).eq(200);
-            viewAdPage.adTitle.should(
-                "contain.text",
-                "Slika - Paukova školjka"
-            );
-        });
     });
 
     it("Zaštitno staklo za kameru - Samsung S20 FE", () => {
-        cy.intercept("POST", `${Cypress.env("apiUrl")}/eds/save`).as(
-            "getSavedAd"
-        );
         postavljanjeOglasaPage.postavljanjeOglasa(
             0,
             "Mobilni tel. | Oprema i delovi",
@@ -142,12 +108,5 @@ describe("Postavljanje oglasa", () => {
                 "cypress/fixtures/Zaštitno staklo za kameru - Samsung S20 FE/3.jpg",
             ]
         );
-        cy.wait("@getSavedAd").then((interception) => {
-            expect(interception.response.statusCode).eq(200);
-            viewAdPage.adTitle.should(
-                "contain.text",
-                "Zaštitno staklo za kameru - Samsung S20 FE"
-            );
-        });
     });
 });
