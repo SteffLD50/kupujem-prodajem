@@ -13,4 +13,8 @@ module.exports = defineConfig({
         apiUrl: "https://www.kupujemprodajem.com/api/web/v1",
     },
     video: false,
+    retries: {
+        runMode: 3,
+        openMode: 0,
+    },
 });
