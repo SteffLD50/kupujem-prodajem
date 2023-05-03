@@ -76,7 +76,7 @@ class PostavljanjeOglasaPage {
         this.adCategoryInput.type(adCategory).type("{enter}");
         this.adGroupInput.type(adGroup).type("{enter}");
         // 2. Unos oglasa
-        cy.wait("@getUnosOglasa").then((interception) => {
+        cy.wait("@getUnosOglasa", { timeout: 10000 }).then((interception) => {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "2. Unos oglasa");
         });
