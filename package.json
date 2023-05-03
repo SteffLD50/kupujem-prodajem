@@ -5,11 +5,13 @@
     "main": "index.js",
     "scripts": {
         "cypress": ".\\node_modules\\.bin\\cypress open",
-        "cyHeadless": ".\\node_modules\\.bin\\cypress run"
+        "cy-headless": ".\\node_modules\\.bin\\cypress run",
+        "html-report": "cypress run --spec cypress\\e2e\\PostavljanjeOglasa.cy.js --browser chrome --headed"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "cypress": "^12.9.0"
+        "cypress": "^12.9.0",
+        "cypress-mochawesome-reporter": "^3.4.0"
     }
 }
