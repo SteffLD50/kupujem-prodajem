@@ -1,20 +1,18 @@
-# "Create Ad" Automatization on [KupujemProdajem.com](https://novi.kupujemprodajem.com/)
+# Create Ad Automatization on [KupujemProdajem.com](https://novi.kupujemprodajem.com/)
 
-"Create Ad" automatization is used to facilitate the process of reposting ads after they expire. The project is made for posting standard (free) ads without any promotions.
+Create Ad Automatization is used to facilitate the process of reposting ads after they expire. The project is made for posting standard (free) ads without any promotions.
 
 ## Table of Contents
 
-1. [ How ads work on KupujemProdajem.com? ](#work)
-2. [ Technologies ](#techno)
-3. [ Development and testing environment ](#env)
+1. [ How ads work on KupujemProdajem.com? ](#how-ads-work-on-kupujemprodajemcom)
+2. [ Technologies ](#technologies)
+3. [ Development and testing environment ](#development-and-testing-environment)
 4. [ Instructions ](#instructions)
-
--   [ 1. Credentials ](#credentials)
--   [ 2. Creation of an Ad ](#create)
--   [ 3. Posting of the Ad ](#usage)
-
+-   [ 1. Credentials ](#1-credentials)
+-   [ 2. Creation of an Ad ](#2-creation-of-an-ad)
+-   [ 3. Ad Posting ](#3-ad-posting)
 5. [ Attention! ](#attention)
-6. [ Few Tips ](#tips)
+6. [ Few Tips ](#few-tips)
 
 ## How ads work on KupujemProdajem.com?
 
@@ -66,55 +64,66 @@ postavljanjeOglasaPage.postavljanjeOglasa()
 A function has 9 parameters:
 
 `postavljanjeOglasa(adType, adCategory, adGroup, adTitle, adPrice, currency, condition, adDescription, imageFiles)`
-
+<br/>
+<br/>
 #### The explanation for every parameter:
 
 -   `adType`, `type=number`
+
     Depending on the ad type we're entering one of the following numbers:
 
-`0` = Stvar (Article)
+    * `0` = Stvar / Article
 
-`1` = Usluga (Service) (not tested)
+    * `1` = Usluga / Service (not tested)
 
-`2` = Posao (Job) (not tested)
+    * `2` = Posao / Job (not tested)
 
 -   `adCategory`, `type=string`
+
     Enter the category name. In order to know which categories exist, we need to visit the KupujemProdajem site and check that out.
 
 -   `adGroup`, `type=string`
+
     Enter the category group name. In order to know which category groups exist, we need to visit the KupujemProdajem site and check that out.
 
 -   `adTitle`, `type=string`
+
     Enter the ad title.
 
 -   `adPrice`, `type=string`
+
     Enter the ad price.
 
 -   `currency`, `type=string`
+
     Choosing the currency of the price. It can be `"rsd"` or `"eur"`.
 
 -   `condition`, `type=number`
+
     Choosing the condition of the article by entering one of the following numbers:
 
-`0` = Kao novo (Nekorišćeno) / Like New (Unused)
+    * `0` = Kao novo (Nekorišćeno) / Like New (Unused)
 
-`1` = Korišćeno (Ispravno) / Used (Correct)
+    * `1` = Korišćeno (Ispravno) / Used (Correct)
 
-`2` = Novo (Samo za firme) / New (Only for the Companies)
+    * `2` = Novo (Samo za firme) / New (Only for the Companies)
 
-`3` = Oštećeno (Neispravno) / Damaged (Faulty)
+    * `3` = Oštećeno (Neispravno) / Damaged (Faulty)
 
-`undefined` – in case the condition option is unavailable (depending on the ad category)
+    * `undefined` – in case the condition option is unavailable (depending on the ad category)
 
 -   `adDescription`, `type=string`
+
     Enter the ad text/description. While typing text, instead of using `Enter` button, we type `\n`.
 
 -   `imageFiles`, `type=string`
+
     Images must be in the project, located in the `fixtures` folder. Image argument example: `["cypress/fixtures/"ad_folder"/"image_name.extension"]`
 
 If there are any ambiguities, analyze the existing examples.
-
-### 3. Posting of the Ad
+<br/>
+<br/>
+### 3. Ad Posting
 
 After we implemented desired ads, automated ad posting can be launched. We do that through terminal by entering the command:
 
@@ -132,9 +141,11 @@ npm run cy-headless
 
 for headless mode (cypress run)
 
-That's it! If everything was entered correctly, ads will be posted. Otherwise, read the instructions again.
 
-#### For Linux Users:
+That's it! If everything was entered correctly, ads will be posted. Otherwise, read the instructions again.
+<br/>
+<br/>
+### For Linux Users:
 
 For test runner commands on Linux OS to work, some minor changes in the `package.json` file are required. Find the `"scripts"` object and replace every `\\` with `/` inside of it. After the changes are done, the `"scripts"` object should look like this:
 
