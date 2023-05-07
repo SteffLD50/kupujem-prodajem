@@ -1,29 +1,38 @@
-# Create Ad Automatization on [KupujemProdajem.com](https://novi.kupujemprodajem.com/)
+# Automated Ad Posting on KupujemProdajem
 
-Create Ad Automatization is used to facilitate the process of reposting ads after they expire. The project is made for posting standard (free) ads without any promotions.
+Automated Ad Posting is used to facilitate the process of reposting standard (free) ads without any promotions after they expire. It's made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/).
 
 ## Table of Contents
 
-1. [ How ads work on KupujemProdajem.com? ](#how-ads-work-on-kupujemprodajemcom)
-2. [ Technologies ](#technologies)
-3. [ Development and testing environment ](#development-and-testing-environment)
-4. [ Instructions ](#instructions)
--   [ 1. Credentials ](#1-credentials)
--   [ 2. Creation of an Ad ](#2-creation-of-an-ad)
--   [ 3. Ad Posting ](#3-ad-posting)
-5. [ Attention! ](#attention)
-6. [ Few Tips ](#few-tips)
+-   [ About the Project ](#about-the-project)
+-   [ How Ads Work on KupujemProdajem? ](#how-ads-work-on-kupujemprodajem)
+-   [ Technologies ](#technologies)
+-   [ Development and Testing Environment ](#development-and-testing-environment)
+-   [ Instructions ](#instructions)
+    -   [ 1. Credentials ](#1-credentials)
+    -   [ 2. Creation of an Ad ](#2-creation-of-an-ad)
+    -   [ 3. Ad Posting ](#3-ad-posting)
+-   [ Attention ](#attention)
+-   [ Few Tips ](#few-tips)
 
-## How ads work on KupujemProdajem.com?
+## About the Project
 
-The validity period of a standard ad (without any paid promotion or KP Obnavljač) is 30 days and after that period it will be automatically deleted. On a monthly basis, 30 ads can be placed for free, everything above that has to be paid for.
+It's a solo project, and it's still a work in progress.
+
+I am a long-term user of the site [KupujemProdajem](https://novi.kupujemprodajem.com/). Since I'm posting and reposting about 30 ads every month, I decided to make the whole process easier for myself with the help of test automation. While manually posting 30 ads, it took me more than one hour to complete the process. It was a draining and boring process... Now, it's all done in about 20 minutes, and on the plus side, I can play my bass or chill with the book while the ads are posted by themself.
+
+The purpose of this project is to learn and gain new experiences without gaining any money. I'm still looking for ways to speed up the whole process. Feel free to contact me and give me some feedback.
+
+## How Ads Work on KupujemProdajem?
+
+The validity period of a standard ad (without any paid promotion or KP Obnavljač) is 30 days. Soon as this period ends the ad will be automatically deleted. On a monthly basis, 30 ads can be placed for free, everything above has to be paid.
 
 ## Technologies
 
 -   HTML5
 -   JavaScript ES6
 
-## Development and testing environment:
+## Development and Testing Environment:
 
 -   OS Windows 10 Pro
 -   Chrome, Version: 113.0.5672.64 (Official Build) (64-bit)
@@ -34,7 +43,7 @@ The validity period of a standard ad (without any paid promotion or KP Obnavlja�
 
 ## Instructions
 
-Download the repository using this command:
+Download the repository by using the command:
 
 ```bash
 git clone https://github.com/SteffLD50/kupujem-prodajem.git
@@ -42,7 +51,7 @@ git clone https://github.com/SteffLD50/kupujem-prodajem.git
 
 ### 1. Credentials
 
-In the projects root folder `../kupujem-prodajem` we need to create a `cypress.env.json` file. Copy and paste this code inside of the file:
+In the project's root folder `../kupujem-prodajem` we need to create the file `cypress.env.json`. Copy and paste this code inside of the file:
 
 ```
 {
@@ -51,103 +60,101 @@ In the projects root folder `../kupujem-prodajem` we need to create a `cypress.e
 }
 ```
 
-Inside the quotation marks type valid credentials of the existing account.
+Enter valid login credentials inside of the quotation marks for the existing account.
 
 ### 2. Creation of an Ad
 
-We need to open the `PostavljanjeOglasa.cy.js` file, which is located in `cypress/e2e/PostavljanjeOglasa.cy.js`. A couple of examples are already in this file. We can see that every ad is actually a test in which we're calling a function. The function is called using:
+Open the file `PostavljanjeOglasa.cy.js` located in the folder `../kupujem-prodajem/cypress/e2e/`. There are already a couple of examples in the file. If we look at the examples we'll notice that every ad is an `it()` block in which we're calling a method. The method is called by typing:
 
 ```
 postavljanjeOglasaPage.postavljanjeOglasa()
 ```
 
-A function has 9 parameters:
+The method has 9 parameters:
 
 `postavljanjeOglasa(adType, adCategory, adGroup, adTitle, adPrice, currency, condition, adDescription, imageFiles)`
-<br/>
-<br/>
-#### The explanation for every parameter:
 
--   `adType`, `type=number`
+#### An explanation for every parameter:
 
-    Depending on the ad type we're entering one of the following numbers:
+| Parameter:   | `adType`                                                     |
+| ------------ | ------------------------------------------------------------ |
+| Type:        | `number`                                                     |
+| Description: | Enter one of the following numbers depending on the ad type: |
+|              | `0` = Stvar / Article                                        |
+|              | `1` = Usluga / Service (not tested)                          |
+|              | `2` = Posao / Job (not tested)                               |
 
-    * `0` = Stvar / Article
+| Parameter:   | `adCategory`                                                                                                                             |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Type:        | `string`                                                                                                                                 |
+| Description: | Enter the category name. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which categories are available. |
 
-    * `1` = Usluga / Service (not tested)
+| Parameter:   | `adGroup`                                                                                                                                           |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type:        | `string`                                                                                                                                            |
+| Description: | Enter the category group name. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which category groups are available. |
 
-    * `2` = Posao / Job (not tested)
+| Parameter:   | `adTitle`           |
+| ------------ | ------------------- |
+| Type:        | `string`            |
+| Description: | Enter the ad title. |
 
--   `adCategory`, `type=string`
+| Parameter:   | `adPrice`           |
+| ------------ | ------------------- |
+| Type:        | `string`            |
+| Description: | Enter the ad price. |
 
-    Enter the category name. In order to know which categories exist, we need to visit the KupujemProdajem site and check that out.
+| Parameter:   | `currency`              |
+| ------------ | ----------------------- |
+| Type:        | `string`                |
+| Description: | Choose the currency:    |
+|              | `"rsd"` = Serbian Dinar |
+|              | `"eur"` = Euro          |
 
--   `adGroup`, `type=string`
+| Parameter:   | `condition`                                                                            |
+| ------------ | -------------------------------------------------------------------------------------- |
+| Type:        | `number`                                                                               |
+| Description: | Choose the condition of an article by entering one of the following numbers:           |
+|              | `0` = Kao novo (Nekorišćeno) / Like New (Unused)                                       |
+|              | `1` = Korišćeno (Ispravno) / Used (Correct)                                            |
+|              | `2` = Novo (Samo za firme) / New (Only for the Companies)                              |
+|              | `3` = Oštećeno (Neispravno) / Damaged (Faulty)                                         |
+|              | `undefined` = in case the condition option is unavailable (depends on the ad category) |
 
-    Enter the category group name. In order to know which category groups exist, we need to visit the KupujemProdajem site and check that out.
+| Parameter:   | `adDescription`                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------ |
+| Type:        | `string`                                                                                   |
+| Description: | Enter the ad description. Type `\n` instead of pressing the button `Enter` for a new line. |
 
--   `adTitle`, `type=string`
-
-    Enter the ad title.
-
--   `adPrice`, `type=string`
-
-    Enter the ad price.
-
--   `currency`, `type=string`
-
-    Choosing the currency of the price. It can be `"rsd"` or `"eur"`.
-
--   `condition`, `type=number`
-
-    Choosing the condition of the article by entering one of the following numbers:
-
-    * `0` = Kao novo (Nekorišćeno) / Like New (Unused)
-
-    * `1` = Korišćeno (Ispravno) / Used (Correct)
-
-    * `2` = Novo (Samo za firme) / New (Only for the Companies)
-
-    * `3` = Oštećeno (Neispravno) / Damaged (Faulty)
-
-    * `undefined` – in case the condition option is unavailable (depending on the ad category)
-
--   `adDescription`, `type=string`
-
-    Enter the ad text/description. While typing text, instead of using `Enter` button, we type `\n`.
-
--   `imageFiles`, `type=string`
-
-    Images must be in the project, located in the `fixtures` folder. Image argument example: `["cypress/fixtures/"ad_folder"/"image_name.extension"]`
+| Parameter:        | `imageFiles`                                                                                                           |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Type:             | `string`                                                                                                               |
+| Description:      | Add ad photos. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. |
+| Argument example: | `["cypress/fixtures/"ad_folder"/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                   |
 
 If there are any ambiguities, analyze the existing examples.
-<br/>
-<br/>
+
 ### 3. Ad Posting
 
-After we implemented desired ads, automated ad posting can be launched. We do that through terminal by entering the command:
+After the ads are implemented, automated ad posting can be launched. Enter one of the following commands in the terminal. For the headed mode (cypress open):
 
 ```
 npm run cypress
 ```
 
-for headed mode (cypress open)
-
-or
+or for the headless mode (cypress run):
 
 ```
 npm run cy-headless
 ```
 
-for headless mode (cypress run)
+That's it!
 
+If everything was done as described above, the ads should be posted.
 
-That's it! If everything was entered correctly, ads will be posted. Otherwise, read the instructions again.
-<br/>
-<br/>
 ### For Linux Users:
 
-For test runner commands on Linux OS to work, some minor changes in the `package.json` file are required. Find the `"scripts"` object and replace every `\\` with `/` inside of it. After the changes are done, the `"scripts"` object should look like this:
+When running on Linux OS, minor changes are required in the file `package.json` for test runner commands to work. Find the object `"scripts"` and replace every `\\` with `/` inside of it. After the changes are done, the object `"scripts"` should look like this:
 
 ```
 "scripts": {
@@ -157,15 +164,15 @@ For test runner commands on Linux OS to work, some minor changes in the `package
     },
 ```
 
-# Attention!
+# Attention
 
-It should be noted that every time the tests are launched, all implemented ads will be posted. In other words, there will be duplicate ads if the same tests are run again. Also, don't forget that the monthly free amount of ads is 30.
+It should be noted that every time the tests are launched, all the implemented ads will be posted. That means there will be duplicate ads if the same tests are repeated. Also, don't forget that the monthly free amount of ads is 30.
 
 ## Few Tips
 
-However, if we want to skip some of the implemented ads, we can mark them as a comment. We do that by marking the text and pressing `ctrl` + `/`. Canceling the comment is done in the same way.
+To skip some of the implemented ads instead of deleting them, mark them as a comment. Commenting is done by marking the desired code and pressing `ctrl` + `/`. Press the same buttons to cancel a comment.
 
-Also, if we have a number of implemented ads in the project, but we only want to post one specific ad and ignore all the rest, we can do that by adding `".only"` after `"it"`, which would look like this: `it.only()`.
+Also, if we have implemented several ads in the project, but we only want to post just one specific ad and ignore all the rest, we can do that by adding `".only"` to the desired `"it()"` block, which would look like this: `it.only()`.
 
 ## Author
 
