@@ -1,8 +1,9 @@
 /// <reference types="Cypress"/>
 
-import { loginPage } from "../POM/loginPagePOM";
-import { mojiOglasiPage } from "../POM/mojiOglasiPagePOM";
-import { postavljanjeOglasaPage } from "../POM/postavljanjeOglasaPagePOM";
+import { loginPage } from "../POM/loginPage";
+import { mojiOglasiPage } from "../POM/mojiOglasiPage";
+import { postavljanjeOglasaPage } from "../POM/postavljanjeOglasaPage";
+import { AD_TYPE, CONDITION, CURRENCY, AD_ARGUMENTS } from "../fixtures/adData";
 
 describe("Postavljanje oglasa", () => {
     beforeEach("Programmatic Login", () => {
@@ -43,70 +44,59 @@ describe("Postavljanje oglasa", () => {
         });
     });
 
+    it("HDMI Kabl 1.5m", () => {
+        postavljanjeOglasaPage.postavljanjeOglasa(
+            AD_TYPE.STVAR,
+            AD_ARGUMENTS.hdmiKabl.adCategory,
+            AD_ARGUMENTS.hdmiKabl.adGroup,
+            AD_ARGUMENTS.hdmiKabl.adTitle,
+            AD_ARGUMENTS.hdmiKabl.adPrice,
+            CURRENCY.RSD,
+            CONDITION.KAO_NOVO,
+            AD_ARGUMENTS.hdmiKabl.adDescription,
+            AD_ARGUMENTS.hdmiKabl.imageFiles
+        );
+    });
+
     it("Miš Scorpion M207 - Marvo", () => {
         postavljanjeOglasaPage.postavljanjeOglasa(
-            0,
-            "Kompjuteri | Desktop",
-            "Miševi i podloge",
-            "Miš Scorpion M207 - Marvo",
-            "800",
-            "rsd",
-            0,
-            "Miš Scorpion M207 - Marvo\n\nSensor: Optical\nDPI: 800-1200-2400-3200\nButtons: 6\nSwitch rating: 3 million clicks\nBacklight: 7 colors\nInterface: USB 2.0\nCable length: 1.5m\nOS support: Windows 7, 8, 10, or newer...\n\nMiš nije korišćen.\n\n(mouse, kompjuter, gaming, gejming)",
-            [
-                "cypress/fixtures/PC/Miš Scorpion M207 - Marvo/1.jpg",
-                "cypress/fixtures/PC/Miš Scorpion M207 - Marvo/2.jpg",
-            ]
+            AD_TYPE.STVAR,
+            AD_ARGUMENTS.misScorpion.adCategory,
+            AD_ARGUMENTS.misScorpion.adGroup,
+            AD_ARGUMENTS.misScorpion.adTitle,
+            AD_ARGUMENTS.misScorpion.adPrice,
+            CURRENCY.RSD,
+            CONDITION.KAO_NOVO,
+            AD_ARGUMENTS.misScorpion.adDescription,
+            AD_ARGUMENTS.misScorpion.imageFiles
         );
     });
 
     it("Procesor Intel Core i7-6700 - 3.40 GHz", () => {
         postavljanjeOglasaPage.postavljanjeOglasa(
-            0,
-            "Kompjuteri | Desktop",
-            "Procesori",
-            "Procesor Intel Core i7-6700 - 3.40 GHz",
-            "100",
-            "eur",
-            1,
-            "Procesor Intel Core i7-6700\n\nSocket: LGA 1151\nClockspeed: 3.4 GHZ\nTurbo Speed: 4.0 GHZ\nCores: 4 Threads: 8\nTypical TDP: 65 W\n\n6th Generation Intel® Core™ i7 Processors",
-            [
-                "cypress/fixtures/PC/Procesor Intel Core i7-6700 - 3.40 GHz/1.jpg",
-                "cypress/fixtures/PC/Procesor Intel Core i7-6700 - 3.40 GHz/2.jpg",
-                "cypress/fixtures/PC/Procesor Intel Core i7-6700 - 3.40 GHz/3.jpg",
-            ]
+            AD_TYPE.STVAR,
+            AD_ARGUMENTS.procesorIntel.adCategory,
+            AD_ARGUMENTS.procesorIntel.adGroup,
+            AD_ARGUMENTS.procesorIntel.adTitle,
+            AD_ARGUMENTS.procesorIntel.adPrice,
+            CURRENCY.EUR,
+            CONDITION.KORISCENO,
+            AD_ARGUMENTS.procesorIntel.adDescription,
+            AD_ARGUMENTS.procesorIntel.imageFiles
         );
     });
 
-    it("Slika - Paukova školjka", () => {
+    it("Suvenir - Lambis Scorpius", () => {
         postavljanjeOglasaPage.postavljanjeOglasa(
-            0,
-            "Kolekcionarstvo",
-            "Suveniri",
-            "Slika - Paukova školjka",
-            "700",
-            "rsd",
+            AD_TYPE.STVAR,
+            AD_ARGUMENTS.suvenirLambisScorpius.adCategory,
+            AD_ARGUMENTS.suvenirLambisScorpius.adGroup,
+            AD_ARGUMENTS.suvenirLambisScorpius.adTitle,
+            AD_ARGUMENTS.suvenirLambisScorpius.adPrice,
+            CURRENCY.RSD,
             undefined,
-            "Slika / suvenir - Paukova školjka (Lambis scorpius)\n\nDimenzije uključujući ram: 13 x 18cm\n\nMože i uplata na račun radi jeftinije poštarine.",
-            ["cypress/fixtures/Slika - Paukova školjka/1.jpg"]
-        );
-    });
-
-    it("Zaštitno staklo za kameru - Samsung S20 FE", () => {
-        postavljanjeOglasaPage.postavljanjeOglasa(
-            0,
-            "Mobilni tel. | Oprema i delovi",
-            "Samsung | Futrole, maske i folije",
-            "Zaštitno staklo za kameru - Samsung S20 FE",
-            "400",
-            "rsd",
-            0,
-            "Zaštitno staklo za zadnju kameru za Samsung Galaxy S20 FE.\n\nStaklo ne utiče na kvalitet fotografije, provereno, imam isto takvo na svom telefonu.",
-            [
-                "cypress/fixtures/Zaštitno staklo za kameru - Samsung S20 FE/1.jpg",
-                "cypress/fixtures/Zaštitno staklo za kameru - Samsung S20 FE/2.jpg",
-                "cypress/fixtures/Zaštitno staklo za kameru - Samsung S20 FE/3.jpg",
-            ]
+            AD_ARGUMENTS.suvenirLambisScorpius.adDescription,
+            AD_ARGUMENTS.suvenirLambisScorpius.imageFiles
         );
     });
 });
