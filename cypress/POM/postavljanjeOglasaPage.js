@@ -20,8 +20,16 @@ class PostavljanjeOglasaPage {
         return cy.get("#react-select-categoryId-input");
     }
 
+    get categoryListbox() {
+        return cy.get("#react-select-categoryId-listbox");
+    }
+
     get adGroupInput() {
         return cy.get("#react-select-groupId-input");
+    }
+
+    get groupListbox() {
+        return cy.get("#react-select-groupId-listbox");
     }
 
     // 2. Korak - Unos oglasa
@@ -93,8 +101,12 @@ class PostavljanjeOglasaPage {
 
         // 1. Korak - Izbor kategorije
         this.adTypeSelect.eq(adType).check();
-        this.adCategoryInput.type(adCategory).type("{enter}");
-        this.adGroupInput.type(adGroup).type("{enter}");
+        this.adCategoryInput.type(adCategory);
+        this.categoryListbox.should("be.visible");
+        this.adCategoryInput.type("{enter}");
+        this.adGroupInput.type(adGroup);
+        this.groupListbox.should("be.visible");
+        this.adGroupInput.type("{enter}");
 
         // 2. Korak - Unos oglasa
         cy.wait("@getUnosOglasa", { timeout: 10000 }).then((interception) => {
