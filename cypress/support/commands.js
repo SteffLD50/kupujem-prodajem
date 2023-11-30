@@ -24,29 +24,29 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("loginViaBackend", () => {
-    cy.request({
-        method: "POST",
-        url: `${Cypress.env("apiUrl")}/auth/login`,
-        headers: {
-            "x-kp-signature": "956570ad7313c3170baf4b942a4e5d6abb1aab08",
-        },
-        body: {
-            email: Cypress.env("validEmail"),
-            password: Cypress.env("validPassword"),
-            // remember: "no",
-        },
-        // }).then((resp) => {
-        //     console.debug("autentication response", resp);
-        //     const cookies = resp.headers["set-cookie"];
-        //     cookies.forEach((cookie) => {
-        //         const firstPart = cookie.split(";")[0];
-        //         const separator = firstPart.indexOf("=");
-        //         const name = firstPart.substring(0, separator);
-        //         const value = firstPart.substring(separator + 1);
-        //         console.debug("cookie", name, value);
-        //         cy.setCookie(name, value);
-        //     });
+import { homePage } from "../POM/homePage";
+
+Cypress.Commands.add("loginViaPuppeteer", () => {
+    cy.session("loginViaPuppeteer", () => {
+        cy.intercept("GET", `${Cypress.env("apiUrl")}/poll/index`).as(
+            "homePage"
+        );
+
+        cy.task("puppeteer:saveCookiesToFile");
+
+        cy.visit("/");
+        cy.wait("@homePage").then((interception) => {
+            expect(interception.response.statusCode).eq(200);
+            homePage.sidebarUlogujteSeBtn.should("exist").and("be.visible");
+            homePage.sidebarMojiOglasiLink.should("not.exist");
+        });
+
+        cy.fixture("cookies.json").then((cookies) => {
+            const parsedCookies = JSON.parse(JSON.stringify(cookies));
+            parsedCookies.forEach((cookie) => {
+                cy.setCookie(cookie.name, cookie.value);
+            });
+        });
     });
 });
 
