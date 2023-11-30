@@ -1,7 +1,7 @@
 {
     "name": "kupujemprodajem",
-    "version": "1.0.0",
-    "description": "",
+    "version": "1.0.1",
+    "description": "KupujemProdajem.com added hCaptcha in login process. To bypass it I had to find a different way to login. Solved it by loging in via social media.",
     "main": "index.js",
     "scripts": {
         "cypress": ".\\node_modules\\.bin\\cypress open",
