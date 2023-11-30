@@ -1,5 +1,5 @@
 const { defineConfig } = require("cypress");
-const saveCookiesToFile = require("./cypress/tasks/facebookLogin");
+const saveCookiesToFile = require("./cypress/tasks/loginViaFacebook");
 
 module.exports = defineConfig({
     projectId: "ckhiqk",

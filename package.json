@@ -6,7 +6,7 @@
     "scripts": {
         "cypress": ".\\node_modules\\.bin\\cypress open",
         "cy-headless": ".\\node_modules\\.bin\\cypress run",
-        "html-report": "cypress run --spec cypress\\e2e\\PostavljanjeOglasa.cy.js --browser chrome --headed"
+        "html-report": "cypress run --spec cypress\\e2e\\PostavljanjeOglasa.cy.js --browser electron --headed"
     },
     "author": "",
     "license": "ISC",
