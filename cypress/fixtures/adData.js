@@ -12,8 +12,8 @@ export const CURRENCY = {
 export const CONDITION = {
     KAO_NOVO: 0,
     KORISCENO: 1,
-    NOVO: 2,
-    OSTECENO: 3,
+    OSTECENO: 2,
+    NOVO: 3,
 };
 
 export const AD_ARGUMENTS = {
