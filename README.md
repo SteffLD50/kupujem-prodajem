@@ -1,6 +1,6 @@
-# Automated Ad Posting on KupujemProdajem v.1.0.1
+# Automated Ad Posting v.1.0.1
 
-Automated Ad Posting is used to facilitate the process of reposting standard (free) ads without any promotions after they expire. It's made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/).
+Automated Ad Posting is made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/). It is used to facilitate the process of reposting standard (free) ads without any promotions after they expire.
 
 ## Table of Contents
 
@@ -61,7 +61,7 @@ Enter the valid login credentials inside of the quotation marks for the existing
 #### Facebook credentials:
 
 In the project's root folder `../kupujem-prodajem` find the file `.env` and open it.
-Enter the valid login credentials right after `=`s. No `""`, `,`, `;` or spaces are needed.
+Enter the valid login credentials right after `=`s. No additional characters like `""`, `,`, `;` or spaces are needed.
 
 ### 2. Creation of an Ad
 
