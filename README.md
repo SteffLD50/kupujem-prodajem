@@ -1,4 +1,4 @@
-# Automated Ad Posting on KupujemProdajem
+# Automated Ad Posting on KupujemProdajem v.1.0.1
 
 Automated Ad Posting is used to facilitate the process of reposting standard (free) ads without any promotions after they expire. It's made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/).
 
@@ -19,13 +19,13 @@ Automated Ad Posting is used to facilitate the process of reposting standard (fr
 
 It's a solo project, and it's still a work in progress.
 
-I am a long-term user of the site [KupujemProdajem](https://novi.kupujemprodajem.com/). Since I'm posting and reposting about 30 ads every month, I decided to make the whole process easier for myself with the help of test automation. While manually posting 30 ads, it took me more than one hour to complete the process. It was a draining and boring process... Now, it's all done in about 20 minutes, and on the plus side, I can play my bass or chill with the book while the ads are posted by themself.
+I am a long-term user of the site [KupujemProdajem](https://novi.kupujemprodajem.com/). Since I'm posting and reposting about 30 ads every month, I decided to make the whole process easier for myself with the help of test automation. While manually posting 30 ads, it took me more than one hour to complete the process. It was a draining and boring process... Now, it's all done in about 15 minutes, and on the plus side, I can just seat and watch while the ads are posted by themself.
 
 The purpose of this project is to learn and gain new experiences without gaining any money. I'm still looking for ways to speed up the whole process. Feel free to contact me and give me some feedback.
 
 ## How Ads Work on KupujemProdajem?
 
-The validity period of a standard ad (without any paid promotion or KP Obnavljač) is 30 days. Soon as this period ends the ad will be automatically deleted. On a monthly basis, 30 ads can be placed for free, everything above has to be paid.
+The validity period of a standard ad (without any paid promotion or KP Obnavljač) is 30 days. After 30 days the ad will be automatically deleted. On a monthly basis, 30 ads can be placed for free, everything above that has to be paid.
 
 ## Technologies
 
@@ -35,32 +35,33 @@ The validity period of a standard ad (without any paid promotion or KP Obnavlja�
 ## Development and Testing Environment:
 
 -   OS Windows 10 Pro
--   Chrome, Version: 113.0.5672.64 (Official Build) (64-bit)
--   Visual Studio Code, Version: 1.78 .0
+-   Visual Studio Code, Version: 1.84.2
 -   Git, Version: 2.39.0.windows.2
--   Cypress, Version: 12.11.0
--   Node.js, Version: 16.17.1
+-   Cypress, Version: 13.6.0
+-   Node.js, Version: 18.15.0
+-   Electron, Version: 25.9.2
+-   dotenv, Version: 16.3.1
+-   Puppeteer, Version: 21.5.2
 
 ## Instructions
 
 Download the repository by using the command:
 
-```bash
+```
 git clone https://github.com/SteffLD50/kupujem-prodajem.git
 ```
 
 ### 1. Credentials
 
-In the project's root folder `../kupujem-prodajem` we need to create the file `cypress.env.json`. Copy and paste this code inside of the file:
+#### KupujemProdajem credentials:
 
-```
-{
-    "validEmail": "",
-    "validPassword": ""
-}
-```
+In the project's root folder `../kupujem-prodajem` find the file `cypress.env.json` and open it.
+Enter the valid login credentials inside of the quotation marks for the existing account.
 
-Enter valid login credentials inside of the quotation marks for the existing account.
+#### Facebook credentials:
+
+In the project's root folder `../kupujem-prodajem` find the file `.env` and open it.
+Enter the valid login credentials right after `=`s. No `""`, `,`, `;` or spaces are needed.
 
 ### 2. Creation of an Ad
 
@@ -74,7 +75,7 @@ The method has 9 parameters:
 
 `postavljanjeOglasa(adType, adCategory, adGroup, adTitle, adPrice, currency, condition, adDescription, imageFiles)`
 
-#### An explanation for every parameter:
+#### An explanation for each parameter:
 
 | Parameter:   | `adType`                                                     |
 | ------------ | ------------------------------------------------------------ |
@@ -111,20 +112,20 @@ The method has 9 parameters:
 |              | `"rsd"` = Serbian Dinar |
 |              | `"eur"` = Euro          |
 
-| Parameter:   | `condition`                                                                            |
-| ------------ | -------------------------------------------------------------------------------------- |
-| Type:        | `number`                                                                               |
-| Description: | Choose the condition of an article by entering one of the following numbers:           |
-|              | `0` = Kao novo (Nekorišćeno) / Like New (Unused)                                       |
-|              | `1` = Korišćeno (Ispravno) / Used (Correct)                                            |
-|              | `2` = Novo (Samo za firme) / New (Only for the Companies)                              |
-|              | `3` = Oštećeno (Neispravno) / Damaged (Faulty)                                         |
-|              | `undefined` = in case the condition option is unavailable (depends on the ad category) |
+| Parameter:   | `condition`                                                                              |
+| ------------ | ---------------------------------------------------------------------------------------- |
+| Type:        | `number`                                                                                 |
+| Description: | Choose the condition of an article by entering one of the following numbers:             |
+|              | `0` = Kao novo (Nekorišćeno) / Like New (Unused)                                         |
+|              | `1` = Korišćeno (Ispravno) / Used (Correct)                                              |
+|              | `2` = Oštećeno (Neispravno) / Damaged (Faulty)                                           |
+|              | `3` = Novo (Samo za firme) / New (Only for the Companies)                                |
+|              | `undefined` = in case the condition option is unavailable (depending on the ad category) |
 
-| Parameter:   | `adDescription`                                                                            |
-| ------------ | ------------------------------------------------------------------------------------------ |
-| Type:        | `string`                                                                                   |
-| Description: | Enter the ad description. Type `\n` instead of pressing the button `Enter` for a new line. |
+| Parameter:   | `adDescription`                                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| Type:        | `string`                                                                            |
+| Description: | Enter the ad description. Type `\n` instead of pressing the `Enter` for a new line. |
 
 | Parameter:        | `imageFiles`                                                                                                           |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -136,17 +137,17 @@ If there are any ambiguities, analyze the existing examples.
 
 ### 3. Ad Posting
 
-After the ads are implemented, automated ad posting can be launched. Enter one of the following commands in the terminal. For the headed mode (cypress open):
+After the ads are implemented, Automated Ad Posting can be launched. Enter the following command in the terminal:
 
 ```
 npm run cypress
 ```
 
-or for the headless mode (cypress run):
+Cypress will launch in the headed mode (cypress open).
 
-```
-npm run cy-headless
-```
+-   Choose "E2E Testing".
+-   Check "Electron" browser and click "Start E2E Testing in Electron".
+-   Click on "PostavljanjeOglasa.cy.js"
 
 That's it!
 
@@ -154,13 +155,13 @@ If everything was done as described above, the ads should be posted.
 
 ### For Linux Users:
 
-When running on Linux OS, minor changes are required in the file `package.json` for test runner commands to work. Find the object `"scripts"` and replace every `\\` with `/` inside of it. After the changes are done, the object `"scripts"` should look like this:
+When running on Linux OS, minor changes are required in the file `package.json` for test runner commands to work. Find the object `"scripts"` and inside of it replace every `\\` with `/`. After the changes are done, the object `"scripts"` should look like this:
 
 ```
 "scripts": {
         "cypress": "./node_modules/.bin/cypress open",
         "cy-headless": "./node_modules/.bin/cypress run",
-        "html-report": "cypress run --spec cypress/e2e/PostavljanjeOglasa.cy.js --browser chrome --headed"
+        "html-report": "cypress run --spec cypress/e2e/PostavljanjeOglasa.cy.js --browser electron --headed"
     },
 ```
 
