@@ -1,42 +1,35 @@
 /// <reference types="Cypress"/>
 
-import { loginPage } from "../POM/loginPage";
 import { mojiOglasiPage } from "../POM/mojiOglasiPage";
 import { postavljanjeOglasaPage } from "../POM/postavljanjeOglasaPage";
 import { AD_TYPE, CONDITION, CURRENCY, AD_ARGUMENTS } from "../fixtures/adData";
 
 describe("Postavljanje oglasa", () => {
-    beforeEach("Programmatic Login", () => {
-        cy.intercept(
-            "GET",
-            `${Cypress.env("apiUrl")}/general/feature-flags`
-        ).as("getMoji-oglasi");
-        cy.intercept(
-            "GET",
-            `${Cypress.env(
-                "apiUrl"
-            )}/categories?filters[banner_price_rank_exclude]=-1&filters[active]=visible`
-        ).as("getPostavljanje-oglasa");
+    beforeEach("Login Via Puppeteer", () => {
+        cy.intercept("GET", `${Cypress.env("apiUrl")}/me`).as("mojiOglasiPage");
+        cy.intercept("GET", `${Cypress.env("apiUrl")}/agreements`).as(
+            "postaviteOglasPage"
+        );
 
-        cy.visit("/login");
-        loginPage.emailInput.should("exist").and("be.visible");
-        cy.loginViaBackend();
+        cy.loginViaPuppeteer();
+
         cy.visit("/moj-kp/moji-oglasi");
-        cy.wait("@getMoji-oglasi").then((interception) => {
+        cy.wait("@mojiOglasiPage").then((interception) => {
             expect(interception.response.statusCode).eq(200);
             cy.url().should(
                 "equal",
-                "https://novi.kupujemprodajem.com/moj-kp/moji-oglasi"
+                "https://www.kupujemprodajem.com/moj-kp/moji-oglasi"
             );
             mojiOglasiPage.headerTitle.should("contain.text", "Moji oglasi");
             mojiOglasiPage.sidebarPorukeLink.should("exist").and("be.visible");
         });
+
         mojiOglasiPage.postaviteOglasBtn.should("exist").click();
-        cy.wait("@getPostavljanje-oglasa").then((interception) => {
+        cy.wait("@postaviteOglasPage").then((interception) => {
             expect(interception.response.statusCode).eq(200);
             cy.url().should(
-                "not.equal",
-                "https://novi.kupujemprodajem.com/moj-kp/moji-oglasi"
+                "equal",
+                "https://www.kupujemprodajem.com/postavljanje-oglasa"
             );
             postavljanjeOglasaPage.headerStepper
                 .should("exist")
