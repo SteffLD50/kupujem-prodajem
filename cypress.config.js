@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+const saveCookiesToFile = require("./cypress/tasks/facebookLogin");
 
 module.exports = defineConfig({
     projectId: "ckhiqk",
@@ -6,11 +7,17 @@ module.exports = defineConfig({
     e2e: {
         setupNodeEvents(on, config) {
             require("cypress-mochawesome-reporter/plugin")(on);
+            on("task", {
+                "puppeteer:saveCookiesToFile": async () => {
+                    const cookies = await saveCookiesToFile();
+                    return cookies;
+                },
+            });
         },
-        baseUrl: "https://novi.kupujemprodajem.com",
+        baseUrl: "https://www.kupujemprodajem.com",
     },
+    watchForFileChanges: false,
     env: {
         apiUrl: "https://www.kupujemprodajem.com/api/web/v1",
     },
-    video: false,
 });
