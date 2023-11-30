@@ -2,7 +2,7 @@ import { viewAdPage } from "./viewAdPage";
 
 class PostavljanjeOglasaPage {
     get headerStepper() {
-        return cy.get(".StepperCircle_stepper__sRQmy");
+        return cy.get(".AdSave_navigationTopHolder__hEERw");
     }
 
     get headerNextBtn() {
@@ -21,7 +21,11 @@ class PostavljanjeOglasaPage {
     }
 
     get categoryListbox() {
-        return cy.get("#react-select-categoryId-listbox");
+        return cy.get("#react-select-categoryId-listbox", { timeout: 10000 });
+    }
+
+    get categoryOption() {
+        return cy.get("#react-select-categoryId-option-0");
     }
 
     get adGroupInput() {
@@ -29,7 +33,11 @@ class PostavljanjeOglasaPage {
     }
 
     get groupListbox() {
-        return cy.get("#react-select-groupId-listbox");
+        return cy.get("#react-select-groupId-listbox", { timeout: 10000 });
+    }
+
+    get groupOption() {
+        return cy.get("#react-select-groupId-option-0");
     }
 
     // 2. Korak - Unos oglasa
@@ -103,10 +111,10 @@ class PostavljanjeOglasaPage {
         this.adTypeSelect.eq(adType).check();
         this.adCategoryInput.type(adCategory);
         this.categoryListbox.should("be.visible");
-        this.adCategoryInput.type("{enter}");
+        this.categoryOption.click();
         this.adGroupInput.type(adGroup);
         this.groupListbox.should("be.visible");
-        this.adGroupInput.type("{enter}");
+        this.groupOption.click();
 
         // 2. Korak - Unos oglasa
         cy.wait("@getUnosOglasa", { timeout: 10000 }).then((interception) => {
@@ -151,7 +159,8 @@ class PostavljanjeOglasaPage {
         this.headerPostAnAdBtn.click();
         cy.wait("@getSavedAd").then((interception) => {
             expect(interception.response.statusCode).eq(200);
-            viewAdPage.adTitle.should("contain.text", adTitle);
+            viewAdPage.searchInputField.should("exist").and("be.visible");
+            viewAdPage.adTitle.should("exist").and("contain.text", adTitle);
         });
     }
 }
