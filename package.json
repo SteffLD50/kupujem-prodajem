@@ -11,7 +11,11 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "cypress": "^12.11.0",
-        "cypress-mochawesome-reporter": "^3.4.0"
+        "cypress": "^13.6.0",
+        "cypress-mochawesome-reporter": "^3.7.0"
+    },
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "puppeteer": "^21.5.2"
     }
 }
