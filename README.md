@@ -5,7 +5,7 @@ Automated Ad Posting is made specifically for the site [KupujemProdajem](https:/
 ## Table of Contents
 
 -   [ About the Project ](#about-the-project)
--   [ How Ads Work on KupujemProdajem? ](#how-ads-work-on-kupujemprodajem)
+-   [ How Do Ads Work on KupujemProdajem? ](#how-do-ads-work-on-kupujemprodajem)
 -   [ Technologies ](#technologies)
 -   [ Development and Testing Environment ](#development-and-testing-environment)
 -   [ Instructions ](#instructions)
@@ -19,13 +19,13 @@ Automated Ad Posting is made specifically for the site [KupujemProdajem](https:/
 
 It's a solo project, and it's still a work in progress.
 
-I am a long-term user of the site [KupujemProdajem](https://novi.kupujemprodajem.com/). Since I'm posting and reposting about 30 ads every month, I decided to make the whole process easier for myself with the help of test automation. While manually posting 30 ads, it took me more than one hour to complete the process. It was a draining and boring process... Now, it's all done in about 15 minutes, and on the plus side, I can just seat and watch while the ads are posted by themself.
+I am a long-term user of the site [KupujemProdajem](https://novi.kupujemprodajem.com/). Since I'm posting and reposting about 30 ads every month, I decided to make the whole process easier for myself with the help of test automation. While manually posting 30 ads, it took me more than one hour to complete the process. It was a draining and boring process... Now, it's all done in about 15 minutes, and on the plus side, I can just sit and watch while the ads are posted by themself.
 
-The purpose of this project is to learn and gain new experiences without gaining any money. I'm still looking for ways to speed up the whole process. Feel free to contact me and give me some feedback.
+The purpose of this project is to learn and gain new experiences without gaining any money. I'm still looking for ways to speed up the whole process. Feel free to reach out to me and give me some feedback.
 
-## How Ads Work on KupujemProdajem?
+## How Do Ads Work on KupujemProdajem?
 
-The validity period of a standard ad (without any paid promotion or KP Obnavljač) is 30 days. After 30 days the ad will be automatically deleted. On a monthly basis, 30 ads can be placed for free, everything above that has to be paid.
+The validity period of a standard ad (without any paid promotion or KP Obnavljač) is 30 days. After 30 days the ad will be automatically deleted. Monthly, 30 ads can be placed for free, everything above that has to be paid.
 
 ## Technologies
 
@@ -56,12 +56,12 @@ git clone https://github.com/SteffLD50/kupujem-prodajem.git
 #### KupujemProdajem credentials:
 
 In the project's root folder `../kupujem-prodajem` find the file `cypress.env.json` and open it.
-Enter the valid login credentials inside of the quotation marks for the existing account.
+Enter the valid login credentials inside the quotation marks for the existing account.
 
 #### Facebook credentials:
 
 In the project's root folder `../kupujem-prodajem` find the file `.env` and open it.
-Enter the valid login credentials right after `=`s. No additional characters like `""`, `,`, `;` or spaces are needed.
+Enter the valid login credentials right after `=`s. No additional characters like `"`, `,`, `;` or spaces are needed.
 
 ### 2. Creation of an Ad
 
@@ -147,7 +147,7 @@ Cypress will launch in the headed mode (cypress open).
 
 -   Choose "E2E Testing".
 -   Check "Electron" browser and click "Start E2E Testing in Electron".
--   Click on "PostavljanjeOglasa.cy.js"
+-   Click on "automatedAdPosting.cy.js"
 
 That's it!
 
@@ -161,7 +161,7 @@ When running on Linux OS, minor changes are required in the file `package.json` 
 "scripts": {
         "cypress": "./node_modules/.bin/cypress open",
         "cy-headless": "./node_modules/.bin/cypress run",
-        "html-report": "cypress run --spec cypress/e2e/PostavljanjeOglasa.cy.js --browser electron --headed"
+        "html-report": "cypress run --spec cypress/e2e/automatedAdPosting.cy.js --browser electron --headed"
     },
 ```
 
@@ -182,4 +182,4 @@ Also, if we have implemented several ads in the project, but we only want to pos
 
 ## 🚀 About Me
 
-Hello there, I'm Stefan Nađlukač and, currently, I'm looking for a Quality Assurance Engineer internship opportunity.
+Hello there, I'm Stefan Nađlukač and I'm currently looking for a Quality Assurance Engineer internship opportunity.
