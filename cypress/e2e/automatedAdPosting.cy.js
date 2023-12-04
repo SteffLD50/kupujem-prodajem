@@ -4,7 +4,7 @@ import { mojiOglasiPage } from "../POM/mojiOglasiPage";
 import { postavljanjeOglasaPage } from "../POM/postavljanjeOglasaPage";
 import { AD_TYPE, CONDITION, CURRENCY, AD_ARGUMENTS } from "../fixtures/adData";
 
-describe("Postavljanje oglasa", () => {
+describe("Automated Ad Posting", () => {
     beforeEach("Login Via Puppeteer", () => {
         cy.intercept("GET", `${Cypress.env("apiUrl")}/me`).as("mojiOglasiPage");
         cy.intercept("GET", `${Cypress.env("apiUrl")}/agreements`).as(
