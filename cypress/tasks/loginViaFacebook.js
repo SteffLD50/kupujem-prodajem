@@ -22,7 +22,7 @@ const saveCookiesToFile = async () => {
                     visible: true,
                 });
                 await page.click(loginViaFbBtn);
-                await page.waitForTimeout(5000);
+                await new Promise((resolve) => setTimeout(resolve, 5000));
 
                 const newWindow = await browser.waitForTarget((target) =>
                     target.url().includes("www.facebook.com/login.php")
@@ -44,8 +44,24 @@ const saveCookiesToFile = async () => {
                 await popUp.type(passwordInput, password);
 
                 const submitBtn = 'button[type="submit"]';
-                await popUp.click(submitBtn);
-                await page.waitForTimeout(10000);
+                await Promise.all([
+                    popUp.waitForNavigation(),
+                    popUp.click(submitBtn),
+                ]);
+
+                if ((await popUp.$('div[aria-label^="Continue"]')) !== null) {
+                    const continueAsBtn = 'div[aria-label^="Continue"]';
+                    await popUp.waitForSelector(continueAsBtn, {
+                        visible: true,
+                    });
+                    await Promise.all([
+                        popUp.waitForNavigation(),
+                        popUp.click(continueAsBtn),
+                        new Promise((resolve) => setTimeout(resolve, 10000)),
+                    ]);
+                } else {
+                    await new Promise((resolve) => setTimeout(resolve, 5000));
+                }
 
                 // Use this to include Third-Party Cookies:
                 // const client = await page.createCDPSession();
