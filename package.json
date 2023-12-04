@@ -1,17 +1,21 @@
 {
     "name": "kupujemprodajem",
-    "version": "1.0.0",
-    "description": "",
+    "version": "1.0.1",
+    "description": "KupujemProdajem.com added hCaptcha in login process. To bypass it I had to find a different way to login. Solved it by loging in via social media.",
     "main": "index.js",
     "scripts": {
         "cypress": ".\\node_modules\\.bin\\cypress open",
         "cy-headless": ".\\node_modules\\.bin\\cypress run",
-        "html-report": "cypress run --spec cypress\\e2e\\PostavljanjeOglasa.cy.js --browser chrome --headed"
+        "html-report": "cypress run --spec cypress\\e2e\\automatedAdPosting.cy.js --browser electron --headed"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "cypress": "^12.11.0",
-        "cypress-mochawesome-reporter": "^3.4.0"
+        "cypress": "^13.6.0",
+        "cypress-mochawesome-reporter": "^3.7.0"
+    },
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "puppeteer": "^21.5.2"
     }
 }

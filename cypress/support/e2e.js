@@ -17,5 +17,15 @@
 import "./commands";
 import "cypress-mochawesome-reporter/register";
 
+Cypress.on("uncaught:exception", (err, runnable) => {
+    return false;
+});
+
+// Cypress.on("uncaught:exception", (err, runnable) => {
+//     if (err.message.includes("ResizeObserver loop limit exceeded")) {
+//         return false;
+//     }
+// });
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
