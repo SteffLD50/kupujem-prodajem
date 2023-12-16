@@ -18,11 +18,13 @@ const saveCookiesToFile = async () => {
                 });
 
                 const loginViaFbBtn = ".facebook";
-                await page.waitForSelector(loginViaFbBtn, {
-                    visible: true,
-                });
-                await page.click(loginViaFbBtn);
-                await new Promise((resolve) => setTimeout(resolve, 5000));
+                await Promise.all([
+                    await page.waitForSelector(loginViaFbBtn, {
+                        visible: true,
+                    }),
+                    await page.click(loginViaFbBtn),
+                    await new Promise((resolve) => setTimeout(resolve, 5000)),
+                ]);
 
                 const newWindow = await browser.waitForTarget((target) =>
                     target.url().includes("www.facebook.com/login.php")

@@ -1,4 +1,4 @@
-# Automated Ad Posting v.1.0.1
+# Automated Ad Posting v.1.0.2
 
 Automated Ad Posting is made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/). It is used to facilitate the process of reposting standard (free) ads without any promotions after they expire.
 
@@ -35,13 +35,13 @@ The validity period of a standard ad (without any paid promotion or KP Obnavlja�
 ## Development and Testing Environment:
 
 -   OS Windows 10 Pro
--   Visual Studio Code, Version: 1.84.2
+-   Visual Studio Code, Version: 1.85.1
 -   Git, Version: 2.39.0.windows.2
--   Cypress, Version: 13.6.0
+-   Cypress, Version: 13.6.1
 -   Node.js, Version: 18.15.0
--   Electron, Version: 25.9.2
+-   Electron, Version: 25.9.7
 -   dotenv, Version: 16.3.1
--   Puppeteer, Version: 21.5.2
+-   Puppeteer, Version: 21.6.1
 
 ## Instructions
 
@@ -49,6 +49,12 @@ Download the repository by using the command:
 
 ```
 git clone https://github.com/SteffLD50/kupujem-prodajem.git
+```
+
+then use this command to install the required dependencies:
+
+```
+npm install
 ```
 
 ### 1. Credentials
@@ -182,4 +188,4 @@ Also, if we have implemented several ads in the project, but we only want to pos
 
 ## 🚀 About Me
 
-Hello there, I'm Stefan Nađlukač and I'm currently looking for a Quality Assurance Engineer internship opportunity.
+Hello there, I'm Stefan Nađlukač and I'm currently looking for a Quality Assurance Engineer internship or job opportunity.
