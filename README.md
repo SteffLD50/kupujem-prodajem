@@ -1,4 +1,4 @@
-# Automated Ad Posting v.1.0.1
+# Automated Ad Posting v.1.0.2
 
 Automated Ad Posting is made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/). It is used to facilitate the process of reposting standard (free) ads without any promotions after they expire.
 
@@ -49,6 +49,12 @@ Download the repository by using the command:
 
 ```
 git clone https://github.com/SteffLD50/kupujem-prodajem.git
+```
+
+then use this command to install the required dependencies:
+
+```
+npm install
 ```
 
 ### 1. Credentials
@@ -182,4 +188,4 @@ Also, if we have implemented several ads in the project, but we only want to pos
 
 ## 🚀 About Me
 
-Hello there, I'm Stefan Nađlukač and I'm currently looking for a Quality Assurance Engineer internship opportunity.
+Hello there, I'm Stefan Nađlukač and I'm currently looking for a Quality Assurance Engineer internship or job opportunity.
