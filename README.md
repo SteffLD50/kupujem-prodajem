@@ -35,13 +35,13 @@ The validity period of a standard ad (without any paid promotion or KP ObnavljaÄ
 ## Development and Testing Environment:
 
 -   OS Windows 10 Pro
--   Visual Studio Code, Version: 1.84.2
+-   Visual Studio Code, Version: 1.85.1
 -   Git, Version: 2.39.0.windows.2
--   Cypress, Version: 13.6.0
+-   Cypress, Version: 13.6.1
 -   Node.js, Version: 18.15.0
--   Electron, Version: 25.9.2
+-   Electron, Version: 25.9.7
 -   dotenv, Version: 16.3.1
--   Puppeteer, Version: 21.5.2
+-   Puppeteer, Version: 21.6.1
 
 ## Instructions
 
