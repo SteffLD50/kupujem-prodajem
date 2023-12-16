@@ -6,6 +6,10 @@ class ViewAdPage {
     get searchInputField() {
         return cy.get("#keywords");
     }
+
+    get modalWindow() {
+        return cy.get(".Modal_modal__ZLQzH");
+    }
 }
 
 export const viewAdPage = new ViewAdPage();
