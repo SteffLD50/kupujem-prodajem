@@ -1,4 +1,4 @@
-# Automated Ad Posting v.1.0.2
+# Automated Ad Posting v.1.1.0
 
 Automated Ad Posting is made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/). It is used to facilitate the process of reposting standard (free) ads without any promotions after they expire.
 
@@ -37,9 +37,10 @@ The validity period of a standard ad (without any paid promotion or KP Obnavlja�
 -   OS Windows 10 Pro
 -   Visual Studio Code, Version: 1.85.1
 -   Git, Version: 2.39.0.windows.2
--   Cypress, Version: 13.6.1
 -   Node.js, Version: 18.15.0
+-   Cypress, Version: 13.6.1
 -   Electron, Version: 25.9.7
+-   Chromium, Version: 114.0.5735.289
 -   dotenv, Version: 16.3.1
 -   Puppeteer, Version: 21.6.1
 
@@ -71,73 +72,91 @@ Enter the valid login credentials right after `=`s. No additional characters lik
 
 ### 2. Creation of an Ad
 
-Open the file `PostavljanjeOglasa.cy.js` located in the folder `../kupujem-prodajem/cypress/e2e/`. There are already a couple of examples in the file. If we look at the examples we'll notice that every ad is an `it()` block in which we're calling a method. The method is called by typing:
+Open the file `adData.js` located in the folder `../kupujem-prodajem/cypress/fixtures/`. Every ad is a separate object. For the data entry explaination I'll be using the following ad object:
 
 ```
-postavljanjeOglasaPage.postavljanjeOglasa()
+export const AD_NAME = {
+    title: "adTitle",
+    type: TYPE.stvar,
+    category: "adCategory",
+    group: "adGroup",
+    price: "adPrice",
+    currency: CURRENCY.rsd,
+    condition: CONDITION.korisceno,
+    description: "adDescription",
+    imageFiles: [],
+};
 ```
 
-The method has 9 parameters:
+#### Instructions for data entry:
 
-`postavljanjeOglasa(adType, adCategory, adGroup, adTitle, adPrice, currency, condition, adDescription, imageFiles)`
+Replace `AD_NAME` with the desired object name. This name will be later used for summoning the object as a parameter in the method.
 
-#### An explanation for each parameter:
+An explanation for each `key: value`:
 
-| Parameter:   | `adType`                                                     |
-| ------------ | ------------------------------------------------------------ |
-| Type:        | `number`                                                     |
-| Description: | Enter one of the following numbers depending on the ad type: |
-|              | `0` = Stvar / Article                                        |
-|              | `1` = Usluga / Service (not tested)                          |
-|              | `2` = Posao / Job (not tested)                               |
-
-| Parameter:   | `adCategory`                                                                                                                             |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Type:        | `string`                                                                                                                                 |
-| Description: | Enter the category name. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which categories are available. |
-
-| Parameter:   | `adGroup`                                                                                                                                           |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Type:        | `string`                                                                                                                                            |
-| Description: | Enter the category group name. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which category groups are available. |
-
-| Parameter:   | `adTitle`           |
+| Key:         | `title`             |
 | ------------ | ------------------- |
 | Type:        | `string`            |
 | Description: | Enter the ad title. |
 
-| Parameter:   | `adPrice`           |
-| ------------ | ------------------- |
-| Type:        | `string`            |
-| Description: | Enter the ad price. |
+| Key:         | `type`                                               |
+| ------------ | ---------------------------------------------------- |
+| Type:        | `number`                                             |
+| Description: | Enter one of the following depending on the ad type: |
+|              | `TYPE.stvar` = Stvar / Article                       |
+|              | `TYPE.usluga` = Usluga / Service (not tested)        |
+|              | `TYPE.posao` = Posao / Job (not tested)              |
 
-| Parameter:   | `currency`              |
-| ------------ | ----------------------- |
-| Type:        | `string`                |
-| Description: | Choose the currency:    |
-|              | `"rsd"` = Serbian Dinar |
-|              | `"eur"` = Euro          |
+| Key:         | `category`                                                                                                                               |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Type:        | `string`                                                                                                                                 |
+| Description: | Enter the category name. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which categories are available. |
 
-| Parameter:   | `condition`                                                                              |
+| Key:         | `group`                                                                                                                                             |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type:        | `string`                                                                                                                                            |
+| Description: | Enter the category group name. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which category groups are available. |
+
+| Key:         | `price`          |
+| ------------ | ---------------- |
+| Type:        | `string`         |
+| Description: | Enter the price. |
+
+| Key:         | `currency`                                            |
+| ------------ | ----------------------------------------------------- |
+| Type:        | `string`                                              |
+| Description: | Choose the currency by entering one of the following: |
+|              | `CURRENCY.rsd` = Serbian Dinar                        |
+|              | `CURRENCY.eur` = Euro                                 |
+
+| Key:         | `condition`                                                                              |
 | ------------ | ---------------------------------------------------------------------------------------- |
 | Type:        | `number`                                                                                 |
-| Description: | Choose the condition of an article by entering one of the following numbers:             |
-|              | `0` = Kao novo (Nekorišćeno) / Like New (Unused)                                         |
-|              | `1` = Korišćeno (Ispravno) / Used (Correct)                                              |
-|              | `2` = Oštećeno (Neispravno) / Damaged (Faulty)                                           |
-|              | `3` = Novo (Samo za firme) / New (Only for the Companies)                                |
+| Description: | Choose the condition of an article by entering one of the following:                     |
+|              | `CONDITION.kaoNovo` = Kao novo (Nekorišćeno) / Like New (Unused)                         |
+|              | `CONDITION.korisceno` = Korišćeno (Ispravno) / Used (Correct)                            |
+|              | `CONDITION.osteceno` = Oštećeno (Neispravno) / Damaged (Faulty)                          |
+|              | `CONDITION.novo` = Novo (Samo za firme) / New (Only for the Companies)                   |
 |              | `undefined` = in case the condition option is unavailable (depending on the ad category) |
 
-| Parameter:   | `adDescription`                                                                     |
+| Key:         | `description`                                                                       |
 | ------------ | ----------------------------------------------------------------------------------- |
 | Type:        | `string`                                                                            |
 | Description: | Enter the ad description. Type `\n` instead of pressing the `Enter` for a new line. |
 
-| Parameter:        | `imageFiles`                                                                                                           |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Type:             | `string`                                                                                                               |
-| Description:      | Add ad photos. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. |
-| Argument example: | `["cypress/fixtures/"ad_folder"/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                   |
+| Key:           | `imageFiles`                                                                                                           |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Type:          | `string`                                                                                                               |
+| Description:   | Add ad photos. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. |
+| Value example: | `["cypress/fixtures/"ad_folder"/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                   |
+
+After we entered all the ad object values, next we have to open the file `automatedAdPosting.cy.js` located in the folder `../kupujem-prodajem/cypress/e2e/`. There are already a couple of examples in the file. If we look at the examples we'll notice that every ad is an `it()` block in which we're calling a method. The method is called by typing:
+
+```
+postavljanjeOglasaPage.postAd()
+```
+
+The method accepts only one parameter. Enter `adObject.` and select one of the existing ad objects by the object name (`AD_NAME`).
 
 If there are any ambiguities, analyze the existing examples.
 
