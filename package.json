@@ -1,6 +1,6 @@
 {
     "name": "kupujemprodajem",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Tool for posting and reposting ads on site 'KupujemProdajem'",
     "main": "index.js",
     "scripts": {
