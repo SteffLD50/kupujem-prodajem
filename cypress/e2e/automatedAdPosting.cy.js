@@ -2,7 +2,7 @@
 
 import { mojiOglasiPage } from "../POM/mojiOglasiPage";
 import { postavljanjeOglasaPage } from "../POM/postavljanjeOglasaPage";
-import { AD_TYPE, CONDITION, CURRENCY, AD_ARGUMENTS } from "../fixtures/adData";
+import * as adObject from "../fixtures/adData";
 
 describe("Automated Ad Posting", () => {
     beforeEach("Login Via Puppeteer", () => {
@@ -38,58 +38,18 @@ describe("Automated Ad Posting", () => {
     });
 
     it("HDMI Kabl 1.5m", () => {
-        postavljanjeOglasaPage.postavljanjeOglasa(
-            AD_TYPE.STVAR,
-            AD_ARGUMENTS.hdmiKabl.adCategory,
-            AD_ARGUMENTS.hdmiKabl.adGroup,
-            AD_ARGUMENTS.hdmiKabl.adTitle,
-            AD_ARGUMENTS.hdmiKabl.adPrice,
-            CURRENCY.RSD,
-            CONDITION.KAO_NOVO,
-            AD_ARGUMENTS.hdmiKabl.adDescription,
-            AD_ARGUMENTS.hdmiKabl.imageFiles
-        );
+        postavljanjeOglasaPage.postAd(adObject.HDMI_KABL);
     });
 
     it("Miš Scorpion M207 - Marvo", () => {
-        postavljanjeOglasaPage.postavljanjeOglasa(
-            AD_TYPE.STVAR,
-            AD_ARGUMENTS.misScorpion.adCategory,
-            AD_ARGUMENTS.misScorpion.adGroup,
-            AD_ARGUMENTS.misScorpion.adTitle,
-            AD_ARGUMENTS.misScorpion.adPrice,
-            CURRENCY.RSD,
-            CONDITION.KAO_NOVO,
-            AD_ARGUMENTS.misScorpion.adDescription,
-            AD_ARGUMENTS.misScorpion.imageFiles
-        );
+        postavljanjeOglasaPage.postAd(adObject.MIS_SCORPION);
     });
 
     it("Procesor Intel Core i7-6700 - 3.40 GHz", () => {
-        postavljanjeOglasaPage.postavljanjeOglasa(
-            AD_TYPE.STVAR,
-            AD_ARGUMENTS.procesorIntel.adCategory,
-            AD_ARGUMENTS.procesorIntel.adGroup,
-            AD_ARGUMENTS.procesorIntel.adTitle,
-            AD_ARGUMENTS.procesorIntel.adPrice,
-            CURRENCY.EUR,
-            CONDITION.KORISCENO,
-            AD_ARGUMENTS.procesorIntel.adDescription,
-            AD_ARGUMENTS.procesorIntel.imageFiles
-        );
+        postavljanjeOglasaPage.postAd(adObject.PROCESSOR_INTEL);
     });
 
     it("Suvenir - Lambis Scorpius", () => {
-        postavljanjeOglasaPage.postavljanjeOglasa(
-            AD_TYPE.STVAR,
-            AD_ARGUMENTS.suvenirLambisScorpius.adCategory,
-            AD_ARGUMENTS.suvenirLambisScorpius.adGroup,
-            AD_ARGUMENTS.suvenirLambisScorpius.adTitle,
-            AD_ARGUMENTS.suvenirLambisScorpius.adPrice,
-            CURRENCY.RSD,
-            undefined,
-            AD_ARGUMENTS.suvenirLambisScorpius.adDescription,
-            AD_ARGUMENTS.suvenirLambisScorpius.imageFiles
-        );
+        postavljanjeOglasaPage.postAd(adObject.SUVENIR_LAMBIS_SCORPIUS);
     });
 });

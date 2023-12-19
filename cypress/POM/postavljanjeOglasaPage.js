@@ -84,18 +84,10 @@ class PostavljanjeOglasaPage {
             .find("button[type='submit']");
     }
 
-    postavljanjeOglasa(
-        adType,
-        adCategory,
-        adGroup,
-        adTitle,
-        adPrice,
-        currency,
-        condition,
-        adDescription,
-        imageFiles
-    ) {
-        const numOfImg = Array(imageFiles.length).fill("@uploadImages");
+    postAd(adObject) {
+        const numOfImg = Array(adObject.imageFiles.length).fill(
+            "@uploadImages"
+        );
 
         cy.intercept("POST", `${Cypress.env("apiUrl")}/log/adcreate`).as(
             "getUnosOglasa"
@@ -108,11 +100,11 @@ class PostavljanjeOglasaPage {
         );
 
         // 1. Korak - Izbor kategorije
-        this.adTypeSelect.eq(adType).check();
-        this.adCategoryInput.type(adCategory);
+        this.adTypeSelect.eq(adObject.type).check();
+        this.adCategoryInput.type(adObject.category);
         this.categoryListbox.should("be.visible");
         this.categoryOption.click();
-        this.adGroupInput.type(adGroup);
+        this.adGroupInput.type(adObject.group);
         this.groupListbox.should("be.visible");
         this.groupOption.click();
 
@@ -121,20 +113,20 @@ class PostavljanjeOglasaPage {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "2. Unos oglasa");
         });
-        this.imageUploadInput.invoke("show").selectFile(imageFiles);
-        this.adTitleInput.type(adTitle);
-        this.adPriceInput.type(adPrice);
-        this.currencySelect.find(`input[value=${currency}]`).check();
+        this.imageUploadInput.invoke("show").selectFile(adObject.imageFiles);
+        this.adTitleInput.type(adObject.title);
+        this.adPriceInput.type(adObject.price);
+        this.currencySelect.find(`input[value=${adObject.currency}]`).check();
 
         // U zavisnosti od odabrane kategorije oglasa, biće dostupno/nedostupno označavanje stanja predmeta
         cy.get("body").then((body) => {
             if (
                 body.find(".AdSaveCondition_conditionHolder__Bo1M7").length > 0
             ) {
-                this.conditionSelect.eq(condition).click();
+                this.conditionSelect.eq(adObject.condition).click();
             }
         });
-        cy.getIframe("#text-field-editor_ifr").type(adDescription);
+        cy.getIframe("#text-field-editor_ifr").type(adObject.description);
 
         // Pre nego što pređemo na sledeći korak, čekamo da se završi upload-ovanje svih slika
         cy.wait(numOfImg, { timeout: 30000 }).then(() => {
@@ -165,7 +157,9 @@ class PostavljanjeOglasaPage {
                 }
             });
             viewAdPage.searchInputField.should("exist").and("be.visible");
-            viewAdPage.adTitle.should("exist").and("contain.text", adTitle);
+            viewAdPage.adTitle
+                .should("exist")
+                .and("contain.text", adObject.title);
         });
     }
 }
