@@ -19,13 +19,13 @@ Automated Ad Posting is made specifically for the site [KupujemProdajem](https:/
 
 It's a solo project, and it's still a work in progress.
 
-I am a long-term user of the site [KupujemProdajem](https://novi.kupujemprodajem.com/). Since I'm posting and reposting about 30 ads every month, I decided to make the whole process easier for myself with the help of test automation. While manually posting 30 ads, it took me more than one hour to complete the process. It was a draining and boring process... Now, it's all done in about 15 minutes, and on the plus side, I can just sit and watch while the ads are posted by themself.
+I am a long-term user of the site [KupujemProdajem](https://novi.kupujemprodajem.com/). Since I'm posting and reposting about 20 ads every month, I decided to make the whole process easier for myself with the help of test automation. While manually posting 20 ads, it took me about one hour to complete the process. It was a draining and boring process... Now, it's all done in about 10 minutes, and on the plus side, I can just sit and watch while the ads are posted by themself.
 
 The purpose of this project is to learn and gain new experiences without gaining any money. I'm still looking for ways to speed up the whole process. Feel free to reach out to me and give me some feedback.
 
 ## How Do Ads Work on KupujemProdajem?
 
-The validity period of a standard ad (without any paid promotion or KP Obnavljač) is 30 days. After 30 days the ad will be automatically deleted. Monthly, 30 ads can be placed for free, everything above that has to be paid.
+The validity period of a standard ad (without any paid promotion or KP Obnavljač) is one month. After one month the ad will be automatically deleted. The latest announcement was that after 01/24/2024, for setting more than 20 ads per month you will need to activate KP Obnavljač.
 
 ## Technologies
 
@@ -192,7 +192,7 @@ When running on Linux OS, minor changes are required in the file `package.json` 
 
 # Attention
 
-It should be noted that every time the tests are launched, all the implemented ads will be posted. That means there will be duplicate ads if the same tests are repeated. Also, don't forget that the monthly free amount of ads is 30.
+It should be noted that every time the tests are launched, all the implemented ads will be posted. That means there will be duplicate ads if the same tests are repeated. Also, don't forget that the monthly free amount of ads is 20.
 
 ## Few Tips
 
