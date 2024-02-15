@@ -61,8 +61,8 @@ class PostavljanjeOglasaPage {
         return cy.get(".AdSaveCondition_conditionHolder__Bo1M7").find("button");
     }
 
-    get imageUploadTitle() {
-        return cy.get(".AdSaveUploadImage_name__NX02a");
+    get imageUploadProgressBar() {
+        return cy.get(".ProgressBar_progressBar__y8dMA");
     }
 
     // 3. Korak - Izbor promocije
@@ -111,7 +111,9 @@ class PostavljanjeOglasaPage {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "2. Unos oglasa");
         });
-        this.imageUploadInput.invoke("show").selectFile(adObject.imageFiles);
+        this.imageUploadInput
+            .invoke("show")
+            .selectFile(adObject.imageFiles.slice(0, 8));
         this.adTitleInput.type(adObject.title);
         this.adPriceInput.type(adObject.price);
         this.currencySelect.find(`input[value=${adObject.currency}]`).check();
@@ -127,9 +129,21 @@ class PostavljanjeOglasaPage {
         cy.getIframe("#text-field-editor_ifr").type(adObject.description);
 
         // Pre nego što pređemo na sledeći korak, čekamo da se završi upload-ovanje svih slika
-        cy.wait(uploadingImages, { timeout: 30000 }).then(() => {
-            this.imageUploadTitle.should("not.exist");
-        });
+        cy.wait(uploadingImages.slice(0, 8), { requestTimeout: 30000 }).then(
+            () => {
+                this.imageUploadProgressBar.should("not.exist");
+                if (uploadingImages.length > 8) {
+                    this.imageUploadInput
+                        .invoke("show")
+                        .selectFile(adObject.imageFiles.slice(8));
+                    cy.wait(uploadingImages.slice(8), {
+                        requestTimeout: 60000,
+                    }).then(() => {
+                        this.imageUploadProgressBar.should("not.exist");
+                    });
+                }
+            }
+        );
         this.headerNextBtn.click();
 
         // 3. Korak - Izbor promocije
