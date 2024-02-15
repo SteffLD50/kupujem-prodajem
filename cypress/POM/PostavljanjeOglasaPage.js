@@ -85,16 +85,14 @@ class PostavljanjeOglasaPage {
     }
 
     postAd(adObject) {
-        const numOfImg = Array(adObject.imageFiles.length).fill(
-            "@uploadImages"
+        const uploadingImages = Array(adObject.imageFiles.length).fill(
+            "@uploadImage"
         );
 
         cy.intercept("POST", `${Cypress.env("apiUrl")}/log/adcreate`).as(
             "getUnosOglasa"
         );
-        cy.intercept("POST", `${Cypress.env("apiUrl")}/file`).as(
-            "uploadImages"
-        );
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/file`).as("uploadImage");
         cy.intercept("POST", `${Cypress.env("apiUrl")}/eds/save`).as(
             "getSavedAd"
         );
@@ -129,7 +127,7 @@ class PostavljanjeOglasaPage {
         cy.getIframe("#text-field-editor_ifr").type(adObject.description);
 
         // Pre nego što pređemo na sledeći korak, čekamo da se završi upload-ovanje svih slika
-        cy.wait(numOfImg, { timeout: 30000 }).then(() => {
+        cy.wait(uploadingImages, { timeout: 30000 }).then(() => {
             this.imageUploadTitle.should("not.exist");
         });
         this.headerNextBtn.click();
