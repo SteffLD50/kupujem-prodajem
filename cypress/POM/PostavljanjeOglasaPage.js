@@ -1,4 +1,4 @@
-import { viewAdPage } from "./viewAdPage";
+import { viewAdPage } from "./ViewAdPage";
 
 class PostavljanjeOglasaPage {
     get headerStepper() {
