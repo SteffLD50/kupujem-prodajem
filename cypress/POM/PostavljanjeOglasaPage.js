@@ -93,7 +93,7 @@ class PostavljanjeOglasaPage {
             "getUnosOglasa"
         );
         cy.intercept("POST", `${Cypress.env("apiUrl")}/file`).as("uploadImage");
-        cy.intercept("POST", `${Cypress.env("apiUrl")}/eds/save`).as(
+        cy.intercept("GET", `${Cypress.env("apiUrl")}/poll/ad-view`).as(
             "getSavedAd"
         );
 
@@ -161,18 +161,20 @@ class PostavljanjeOglasaPage {
         });
         this.termsAndConditionsCheckbox.check({ force: true });
         this.headerPostAnAdBtn.click();
-        cy.wait("@getSavedAd").then((interception) => {
-            expect(interception.response.statusCode).eq(200);
-            cy.get("body").then(($body) => {
-                if ($body.find(".Modal_modal__ZLQzH").length > 0) {
-                    viewAdPage.modalWindow.find("button").eq(0).click();
-                }
-            });
-            viewAdPage.searchInputField.should("exist").and("be.visible");
-            viewAdPage.adTitle
-                .should("exist")
-                .and("contain.text", adObject.title);
-        });
+        cy.wait("@getSavedAd", { requestTimeout: 30000 }).then(
+            (interception) => {
+                expect(interception.response.statusCode).eq(200);
+                viewAdPage.pageBody.then((body) => {
+                    if (body.find(".Modal_modal__ZLQzH").length > 0) {
+                        viewAdPage.modalWindow.find("button").eq(0).click();
+                    }
+                });
+                viewAdPage.searchInputField.should("exist").and("be.visible");
+                viewAdPage.adTitle
+                    .should("exist")
+                    .and("contain.text", adObject.title);
+            }
+        );
     }
 }
 
