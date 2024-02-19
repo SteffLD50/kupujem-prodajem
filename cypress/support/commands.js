@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-import { homePage } from "../POM/homePage";
+import { homePage } from "../POM/HomePage";
 
 Cypress.Commands.add("loginViaPuppeteer", () => {
     cy.session("loginViaPuppeteer", () => {

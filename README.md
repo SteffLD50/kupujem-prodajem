@@ -1,4 +1,4 @@
-# Automated Ad Posting v.1.1.0
+# Automated Ad Posting v.1.1.1
 
 Automated Ad Posting is made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/). It is used to facilitate the process of reposting standard (free) ads without any promotions after they expire.
 
@@ -35,14 +35,14 @@ The validity period of a standard ad (without any paid promotion or KP ObnavljaÄ
 ## Development and Testing Environment:
 
 -   OS Windows 10 Pro
--   Visual Studio Code, Version: 1.85.1
--   Git, Version: 2.39.0.windows.2
--   Node.js, Version: 18.15.0
--   Cypress, Version: 13.6.1
--   Electron, Version: 25.9.7
--   Chromium, Version: 114.0.5735.289
--   dotenv, Version: 16.3.1
--   Puppeteer, Version: 21.6.1
+-   Visual Studio Code, Version: 1.86.1
+-   Git, Version: 2.43.0.windows.1
+-   Node.js, Version: 21.0.0
+-   Cypress, Version: 13.6.4
+-   Electron, Version: 27.2.3
+-   Chromium, Version: 118.0.5993.159
+-   dotenv, Version: 16.4.3
+-   Puppeteer, Version: 22.0.0
 
 ## Instructions
 
@@ -144,11 +144,11 @@ An explanation for each `key: value`:
 | Type:        | `string`                                                                            |
 | Description: | Enter the ad description. Type `\n` instead of pressing the `Enter` for a new line. |
 
-| Key:           | `imageFiles`                                                                                                           |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Type:          | `string`                                                                                                               |
-| Description:   | Add ad photos. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. |
-| Value example: | `["cypress/fixtures/"ad_folder"/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                   |
+| Key:           | `imageFiles`                                                                                                                                       |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type:          | `string`                                                                                                                                           |
+| Description:   | Add ad photos. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. Max number of photos is 20. |
+| Value example: | `["cypress/fixtures/"ad_folder"/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                                               |
 
 After we entered all the ad object values, next we have to open the file `automatedAdPosting.cy.js` located in the folder `../kupujem-prodajem/cypress/e2e/`. There are already a couple of examples in the file. If we look at the examples we'll notice that every ad is an `it()` block in which we're calling a method. The method is called by typing:
 

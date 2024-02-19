@@ -1,7 +1,7 @@
 /// <reference types="Cypress"/>
 
-import { mojiOglasiPage } from "../POM/mojiOglasiPage";
-import { postavljanjeOglasaPage } from "../POM/postavljanjeOglasaPage";
+import { mojiOglasiPage } from "../POM/MojiOglasiPage";
+import { postavljanjeOglasaPage } from "../POM/PostavljanjeOglasaPage";
 import * as adObject from "../fixtures/adData";
 
 describe("Automated Ad Posting", () => {

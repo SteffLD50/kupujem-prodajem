@@ -3,10 +3,10 @@ const puppeteer = require("puppeteer");
 const fse = require("fs-extra");
 
 const saveCookiesToFile = async () => {
-    const COOKIES_PATH = "./cypress/fixtures/cookies.json";
-    const cookiesExist = await fse.pathExists(COOKIES_PATH);
-    const email = process.env.FB_EMAIL;
-    const password = process.env.FB_PASSWORD;
+    const EMAIL = process.env.FB_EMAIL;
+    const PASSWORD = process.env.FB_PASSWORD;
+    const cookies = "./cypress/fixtures/cookies.json";
+    const cookiesExist = await fse.pathExists(cookies);
 
     if (!cookiesExist) {
         await puppeteer.launch({ headless: false }).then(async (browser) => {
@@ -36,14 +36,14 @@ const saveCookiesToFile = async () => {
                     visible: true,
                 });
                 await popUp.click(emailInput);
-                await popUp.type(emailInput, email);
+                await popUp.type(emailInput, EMAIL);
 
                 const passwordInput = 'input[type="password"]';
                 await popUp.waitForSelector(passwordInput, {
                     visible: true,
                 });
                 await popUp.click(passwordInput);
-                await popUp.type(passwordInput, password);
+                await popUp.type(passwordInput, PASSWORD);
 
                 const submitBtn = 'button[type="submit"]';
                 await Promise.all([
@@ -71,7 +71,7 @@ const saveCookiesToFile = async () => {
                 //     .cookies;
 
                 const allCookies = await page.cookies();
-                await fse.writeJSON(COOKIES_PATH, allCookies);
+                await fse.writeJSON(cookies, allCookies);
 
                 browser.close();
             } catch (error) {
@@ -81,12 +81,12 @@ const saveCookiesToFile = async () => {
         });
     }
 
-    const existingCookies = await fse.readJSON(COOKIES_PATH);
+    const currentCookies = await fse.readJSON(cookies);
     const today = new Date();
-    const expiryDate = new Date(existingCookies.expires * 1000);
+    const expiryDate = new Date(currentCookies.expires * 1000);
 
     if (today > expiryDate) {
-        await fse.remove(COOKIES_PATH);
+        await fse.remove(cookies);
         await saveCookiesToFile();
     }
 

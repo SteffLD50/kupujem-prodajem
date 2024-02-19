@@ -1,4 +1,8 @@
 class ViewAdPage {
+    get pageBody() {
+        return cy.get("body");
+    }
+
     get adTitle() {
         return cy.get("h1");
     }

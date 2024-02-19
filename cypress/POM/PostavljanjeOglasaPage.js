@@ -1,4 +1,4 @@
-import { viewAdPage } from "./viewAdPage";
+import { viewAdPage } from "./ViewAdPage";
 
 class PostavljanjeOglasaPage {
     get headerStepper() {
@@ -61,8 +61,8 @@ class PostavljanjeOglasaPage {
         return cy.get(".AdSaveCondition_conditionHolder__Bo1M7").find("button");
     }
 
-    get imageUploadTitle() {
-        return cy.get(".AdSaveUploadImage_name__NX02a");
+    get imageUploadProgressBar() {
+        return cy.get(".ProgressBar_progressBar__y8dMA");
     }
 
     // 3. Korak - Izbor promocije
@@ -85,17 +85,15 @@ class PostavljanjeOglasaPage {
     }
 
     postAd(adObject) {
-        const numOfImg = Array(adObject.imageFiles.length).fill(
-            "@uploadImages"
+        const uploadingImages = Array(adObject.imageFiles.length).fill(
+            "@uploadImage"
         );
 
         cy.intercept("POST", `${Cypress.env("apiUrl")}/log/adcreate`).as(
             "getUnosOglasa"
         );
-        cy.intercept("POST", `${Cypress.env("apiUrl")}/file`).as(
-            "uploadImages"
-        );
-        cy.intercept("POST", `${Cypress.env("apiUrl")}/eds/save`).as(
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/file`).as("uploadImage");
+        cy.intercept("GET", `${Cypress.env("apiUrl")}/poll/ad-view`).as(
             "getSavedAd"
         );
 
@@ -113,7 +111,9 @@ class PostavljanjeOglasaPage {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "2. Unos oglasa");
         });
-        this.imageUploadInput.invoke("show").selectFile(adObject.imageFiles);
+        this.imageUploadInput
+            .invoke("show")
+            .selectFile(adObject.imageFiles.slice(0, 8));
         this.adTitleInput.type(adObject.title);
         this.adPriceInput.type(adObject.price);
         this.currencySelect.find(`input[value=${adObject.currency}]`).check();
@@ -129,9 +129,21 @@ class PostavljanjeOglasaPage {
         cy.getIframe("#text-field-editor_ifr").type(adObject.description);
 
         // Pre nego što pređemo na sledeći korak, čekamo da se završi upload-ovanje svih slika
-        cy.wait(numOfImg, { timeout: 30000 }).then(() => {
-            this.imageUploadTitle.should("not.exist");
-        });
+        cy.wait(uploadingImages.slice(0, 8), { requestTimeout: 30000 }).then(
+            () => {
+                this.imageUploadProgressBar.should("not.exist");
+                if (uploadingImages.length > 8) {
+                    this.imageUploadInput
+                        .invoke("show")
+                        .selectFile(adObject.imageFiles.slice(8));
+                    cy.wait(uploadingImages.slice(8), {
+                        requestTimeout: 60000,
+                    }).then(() => {
+                        this.imageUploadProgressBar.should("not.exist");
+                    });
+                }
+            }
+        );
         this.headerNextBtn.click();
 
         // 3. Korak - Izbor promocije
@@ -149,18 +161,20 @@ class PostavljanjeOglasaPage {
         });
         this.termsAndConditionsCheckbox.check({ force: true });
         this.headerPostAnAdBtn.click();
-        cy.wait("@getSavedAd").then((interception) => {
-            expect(interception.response.statusCode).eq(200);
-            cy.get("body").then(($body) => {
-                if ($body.find(".Modal_modal__ZLQzH").length > 0) {
-                    viewAdPage.modalWindow.find("button").eq(0).click();
-                }
-            });
-            viewAdPage.searchInputField.should("exist").and("be.visible");
-            viewAdPage.adTitle
-                .should("exist")
-                .and("contain.text", adObject.title);
-        });
+        cy.wait("@getSavedAd", { requestTimeout: 30000 }).then(
+            (interception) => {
+                expect(interception.response.statusCode).eq(200);
+                viewAdPage.pageBody.then((body) => {
+                    if (body.find(".Modal_modal__ZLQzH").length > 0) {
+                        viewAdPage.modalWindow.find("button").eq(0).click();
+                    }
+                });
+                viewAdPage.searchInputField.should("exist").and("be.visible");
+                viewAdPage.adTitle
+                    .should("exist")
+                    .and("contain.text", adObject.title);
+            }
+        );
     }
 }
 
