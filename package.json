@@ -1,6 +1,6 @@
 {
     "name": "kupujemprodajem",
-    "version": "1.1.0",
+    "version": "0.1.2",
     "description": "Tool for posting and reposting ads on site 'KupujemProdajem'",
     "main": "index.js",
     "scripts": {
@@ -11,11 +11,11 @@
     "author": "Stefan Nađlukač",
     "license": "ISC",
     "devDependencies": {
-        "cypress": "^13.6.4",
-        "cypress-mochawesome-reporter": "^3.8.1"
+        "cypress": "^13.7.0",
+        "cypress-mochawesome-reporter": "^3.8.2"
     },
     "dependencies": {
-        "dotenv": "^16.4.3",
-        "puppeteer": "^22.0.0"
+        "dotenv": "^16.4.5",
+        "puppeteer": "^22.5.0"
     }
 }
