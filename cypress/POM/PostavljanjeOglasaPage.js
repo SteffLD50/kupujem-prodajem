@@ -45,6 +45,10 @@ class PostavljanjeOglasaPage {
         return cy.get(".AdSaveCondition_conditionHolder__fvNkq").find("button");
     }
 
+    get descriptionInputField() {
+        return cy.getIframe("#text-field-editor_ifr");
+    }
+
     get imageUploadProgressBar() {
         return cy.get(".ProgressBar_progressBar__uhYBn");
     }
@@ -107,7 +111,21 @@ class PostavljanjeOglasaPage {
                 this.conditionSelect.eq(adObject.condition).click();
             }
         });
-        cy.getIframe("#text-field-editor_ifr").type(adObject.description);
+        cy.readFile(adObject.description).then((text) => {
+            const separateLinesArray = text.split(/\r?\n|\r/);
+            const NEW_LINE = "{enter}";
+            const emptyLines = NEW_LINE.repeat(separateLinesArray.length);
+            this.descriptionInputField.find("p").type(emptyLines);
+            cy.wrap(separateLinesArray).each((line, index) => {
+                if (line === "") {
+                } else {
+                    this.descriptionInputField
+                        .find("p")
+                        .eq(index)
+                        .invoke("text", line);
+                }
+            });
+        });
 
         // Before moving on to the next step,
         // we wait for the uploading of all images to finish.
@@ -142,21 +160,21 @@ class PostavljanjeOglasaPage {
             this.headerStepper.should("contain.text", "4. Identifikacija");
         });
         this.termsAndConditionsCheckbox.check({ force: true });
-        // this.headerPostAnAdBtn.click();
-        // cy.wait("@getSavedAd", { requestTimeout: 30000 }).then(
-        //     (interception) => {
-        //         expect(interception.response.statusCode).eq(200);
-        //         viewAdPage.pageBody.then((body) => {
-        //             if (body.find(".Modal_modal__z3RKr").length > 0) {
-        //                 viewAdPage.modalWindow.find("button").eq(0).click();
-        //             }
-        //         });
-        //         viewAdPage.searchInputField.should("exist").and("be.visible");
-        //         viewAdPage.adTitle
-        //             .should("exist")
-        //             .and("contain.text", adObject.title);
-        //     }
-        // );
+        this.headerPostAnAdBtn.click();
+        cy.wait("@getSavedAd", { requestTimeout: 30000 }).then(
+            (interception) => {
+                expect(interception.response.statusCode).eq(200);
+                viewAdPage.pageBody.then((body) => {
+                    if (body.find(".Modal_modal__z3RKr").length > 0) {
+                        viewAdPage.modalWindow.find("button").eq(0).click();
+                    }
+                });
+                viewAdPage.searchInputField.should("exist").and("be.visible");
+                viewAdPage.adTitle
+                    .should("exist")
+                    .and("contain.text", adObject.title);
+            }
+        );
     }
 }
 
