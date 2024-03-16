@@ -63,7 +63,7 @@ npm install
 The precondition for successful login is to have KupujemProdajem and Facebook accounts created using the same email address.
 
 In the project's root folder `../kupujem-prodajem` find the file `.env` and open it.
-Enter the valid Facebook login credentials in this format example:
+Enter the valid Facebook login credentials like in the example below:
 
 ```
 FB_EMAIL=testexample0@gmail.com
@@ -134,15 +134,15 @@ An explanation for each `key: value`:
 |        | `CONDITION.novo` = Novo (Samo za firme) / New (Only for the Companies)                   |
 |        | `undefined` = in case the condition option is unavailable (depending on the ad category) |
 
-| Key:           | `description`                                                                                                                                   |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Value:         | Pass the path of the `.txt` file which contains the ad description. The display of description text will be exactly as it's in the `.txt` file. |
-| Value example: | `"cypress/fixtures/ad_folder/text.txt"                                                                                                          |
+| Key:           | `description`                                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Value:         | Enter the path of the `.txt` file which contains the ad description. The display of description text will be exactly as it's in the `.txt` file. |
+| Value example: | `"cypress/fixtures/ad_folder/text.txt"                                                                                                           |
 
-| Key:           | `imageFiles`                                                                                                                                                |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Value:         | Add ad photos in array. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. Max number of photos is 20. |
-| Value example: | `["cypress/fixtures/ad_folder/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                                                          |
+| Key:           | `imageFiles`                                                                                                                                                    |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Value:         | Add ad photos to the array. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. Max number of photos is 20. |
+| Value example: | `["cypress/fixtures/ad_folder/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                                                              |
 
 After we entered all the ad object values, next we have to open the file `automatedAdPosting.cy.js` located in the folder `../kupujem-prodajem/cypress/e2e/`. There are already a couple of examples in the file. If we look at the examples we'll notice that every ad is an `it()` block in which we're calling a method. The method is called by typing:
 
@@ -150,7 +150,7 @@ After we entered all the ad object values, next we have to open the file `automa
 postavljanjeOglasaPage.postAd()
 ```
 
-The method accepts only one parameter. Enter `adObject.` and select one of the existing ad objects by the object name (`AD_NAME`).
+The method accepts only one parameter. Type `adObject.` and select one of the existing ad objects by the object name (`AD_NAME`).
 
 If there are any ambiguities, analyze the existing examples.
 
