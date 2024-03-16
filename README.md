@@ -137,7 +137,7 @@ An explanation for each `key: value`:
 | Key:           | `description`                                                                                                                                    |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Value:         | Enter the path of the `.txt` file which contains the ad description. The display of description text will be exactly as it's in the `.txt` file. |
-| Value example: | `"cypress/fixtures/ad_folder/text.txt"                                                                                                           |
+| Value example: | `"cypress/fixtures/ad_folder/text.txt"`                                                                                                          |
 
 | Key:           | `imageFiles`                                                                                                                                                    |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
