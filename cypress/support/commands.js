@@ -28,7 +28,7 @@ import { homePage } from "../POM/HomePage";
 
 Cypress.Commands.add("loginViaPuppeteer", () => {
     cy.session("loginViaPuppeteer", () => {
-        cy.intercept("GET", `${Cypress.env("apiUrl")}/poll/index`).as(
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/banners/show-track`).as(
             "homePage"
         );
 

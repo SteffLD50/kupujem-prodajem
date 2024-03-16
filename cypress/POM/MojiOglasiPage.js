@@ -1,6 +1,6 @@
 class MojiOglasiPage {
     get headerTitle() {
-        return cy.get(".Header_headerInner__bGBNV");
+        return cy.get(".MyKpLayout_title__QDRzM");
     }
 
     get sidebarPorukeLink() {

@@ -2,45 +2,29 @@ import { viewAdPage } from "./ViewAdPage";
 
 class PostavljanjeOglasaPage {
     get headerStepper() {
-        return cy.get(".AdSave_navigationTopHolder__hEERw");
+        return cy.get(".AdSave_navigationTopHolder__EqZX0");
     }
 
     get headerNextBtn() {
         return cy
-            .get(".AdSave_navigationTopHolder__hEERw")
+            .get(".AdSave_navigationTopHolder__EqZX0")
             .find("button[type='submit']");
     }
 
-    // 1. Korak - Izbor kategorije
+    // 1. Step - Izbor kategorije (Category selection)
     get adTypeSelect() {
-        return cy.get(".AdSaveStepOne_adKindButtonGroup__TKAq0").find("input");
+        return cy.get(".AdSaveStepOne_adKindButtonGroup__vF7te").find("input");
     }
 
     get adCategoryInput() {
         return cy.get("#react-select-categoryId-input");
     }
 
-    get categoryListbox() {
-        return cy.get("#react-select-categoryId-listbox", { timeout: 10000 });
-    }
-
-    get categoryOption() {
-        return cy.get("#react-select-categoryId-option-0");
-    }
-
     get adGroupInput() {
         return cy.get("#react-select-groupId-input");
     }
 
-    get groupListbox() {
-        return cy.get("#react-select-groupId-listbox", { timeout: 10000 });
-    }
-
-    get groupOption() {
-        return cy.get("#react-select-groupId-option-0");
-    }
-
-    // 2. Korak - Unos oglasa
+    // 2. Step - Unos oglasa (Ad entry)
     get imageUploadInput() {
         return cy.get("input[type='file']").eq(1);
     }
@@ -54,33 +38,37 @@ class PostavljanjeOglasaPage {
     }
 
     get currencySelect() {
-        return cy.get(".AdSaveStepTwo_currency__BUOIN");
+        return cy.get(".AdSaveStepTwo_currency__HjUtK");
     }
 
     get conditionSelect() {
-        return cy.get(".AdSaveCondition_conditionHolder__Bo1M7").find("button");
+        return cy.get(".AdSaveCondition_conditionHolder__fvNkq").find("button");
+    }
+
+    get descriptionInputField() {
+        return cy.getIframe("#text-field-editor_ifr");
     }
 
     get imageUploadProgressBar() {
-        return cy.get(".ProgressBar_progressBar__y8dMA");
+        return cy.get(".ProgressBar_progressBar__uhYBn");
     }
 
-    // 3. Korak - Izbor promocije
+    // 3. Step - Izbor promocije (Choice of promotion)
     get standardVisibility() {
         return cy
-            .get(".Promotion_promoItem__tFpMY")
+            .get(".Promotion_promoItem__aFVdo")
             .eq(0)
             .find("button[type='button']");
     }
 
-    // 4. Korak - Identifikacija
+    // 4. Step - Identifikacija (Identification)
     get termsAndConditionsCheckbox() {
         return cy.get("#acceptyes");
     }
 
     get headerPostAnAdBtn() {
         return cy
-            .get(".AdSave_navigationTopHolder__hEERw")
+            .get(".AdSave_navigationTopHolder__EqZX0")
             .find("button[type='submit']");
     }
 
@@ -93,20 +81,16 @@ class PostavljanjeOglasaPage {
             "getUnosOglasa"
         );
         cy.intercept("POST", `${Cypress.env("apiUrl")}/file`).as("uploadImage");
-        cy.intercept("GET", `${Cypress.env("apiUrl")}/poll/ad-view`).as(
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/banners/show-track`).as(
             "getSavedAd"
         );
 
-        // 1. Korak - Izbor kategorije
+        // 1. Step - Izbor kategorije (Category selection)
         this.adTypeSelect.eq(adObject.type).check();
-        this.adCategoryInput.type(adObject.category);
-        this.categoryListbox.should("be.visible");
-        this.categoryOption.click();
-        this.adGroupInput.type(adObject.group);
-        this.groupListbox.should("be.visible");
-        this.groupOption.click();
+        this.adCategoryInput.type(`${adObject.category}{enter}`);
+        this.adGroupInput.type(`${adObject.group}{enter}`);
 
-        // 2. Korak - Unos oglasa
+        // 2. Step - Unos oglasa (Ad entry)
         cy.wait("@getUnosOglasa", { timeout: 10000 }).then((interception) => {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "2. Unos oglasa");
@@ -118,17 +102,33 @@ class PostavljanjeOglasaPage {
         this.adPriceInput.type(adObject.price);
         this.currencySelect.find(`input[value=${adObject.currency}]`).check();
 
-        // U zavisnosti od odabrane kategorije oglasa, biće dostupno/nedostupno označavanje stanja predmeta
+        // Depending on the selected ad category,
+        // item condition flagging will be available/unavailable
         cy.get("body").then((body) => {
             if (
-                body.find(".AdSaveCondition_conditionHolder__Bo1M7").length > 0
+                body.find(".AdSaveCondition_conditionHolder__fvNkq").length > 0
             ) {
                 this.conditionSelect.eq(adObject.condition).click();
             }
         });
-        cy.getIframe("#text-field-editor_ifr").type(adObject.description);
+        cy.readFile(adObject.description).then((text) => {
+            const separateLinesArray = text.split(/\r?\n|\r/);
+            const NEW_LINE = "{enter}";
+            const emptyLines = NEW_LINE.repeat(separateLinesArray.length);
+            this.descriptionInputField.find("p").type(emptyLines);
+            cy.wrap(separateLinesArray).each((line, index) => {
+                if (line === "") {
+                } else {
+                    this.descriptionInputField
+                        .find("p")
+                        .eq(index)
+                        .invoke("text", line);
+                }
+            });
+        });
 
-        // Pre nego što pređemo na sledeći korak, čekamo da se završi upload-ovanje svih slika
+        // Before moving on to the next step,
+        // we wait for the uploading of all images to finish.
         cy.wait(uploadingImages.slice(0, 8), { requestTimeout: 30000 }).then(
             () => {
                 this.imageUploadProgressBar.should("not.exist");
@@ -146,7 +146,7 @@ class PostavljanjeOglasaPage {
         );
         this.headerNextBtn.click();
 
-        // 3. Korak - Izbor promocije
+        // 3. Step - Izbor promocije (Choice of promotion)
         cy.wait("@getUnosOglasa").then((interception) => {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "3. Izbor promocije");
@@ -154,7 +154,7 @@ class PostavljanjeOglasaPage {
         this.standardVisibility.click();
         this.headerNextBtn.click();
 
-        // 4. Korak - Identifikacija
+        // 4. Step - Identifikacija (Identification)
         cy.wait("@getUnosOglasa").then((interception) => {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "4. Identifikacija");
@@ -165,7 +165,7 @@ class PostavljanjeOglasaPage {
             (interception) => {
                 expect(interception.response.statusCode).eq(200);
                 viewAdPage.pageBody.then((body) => {
-                    if (body.find(".Modal_modal__ZLQzH").length > 0) {
+                    if (body.find(".Modal_modal__z3RKr").length > 0) {
                         viewAdPage.modalWindow.find("button").eq(0).click();
                     }
                 });

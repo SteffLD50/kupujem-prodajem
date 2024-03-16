@@ -1,6 +1,6 @@
-# Automated Ad Posting v.1.1.1
+# KP Automated Ad Posting v.0.0.5
 
-Automated Ad Posting is made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/). It is used to facilitate the process of reposting standard (free) ads without any promotions after they expire.
+KP Automated Ad Posting is made specifically for the site [KupujemProdajem](https://novi.kupujemprodajem.com/). It is used to facilitate the process of reposting standard (free) ads without any promotions after they expire.
 
 ## Table of Contents
 
@@ -35,14 +35,14 @@ The validity period of a standard ad (without any paid promotion or KP Obnavlja�
 ## Development and Testing Environment:
 
 -   OS Windows 10 Pro
--   Visual Studio Code, Version: 1.86.1
+-   Visual Studio Code, Version: 1.87.2
 -   Git, Version: 2.43.0.windows.1
 -   Node.js, Version: 21.0.0
--   Cypress, Version: 13.6.4
--   Electron, Version: 27.2.3
+-   Cypress, Version: 13.7.0
+-   Electron, Version: 27.3.2
 -   Chromium, Version: 118.0.5993.159
--   dotenv, Version: 16.4.3
--   Puppeteer, Version: 22.0.0
+-   dotenv, Version: 16.4.5
+-   Puppeteer, Version: 22.5.0
 
 ## Instructions
 
@@ -60,15 +60,17 @@ npm install
 
 ### 1. Credentials
 
-#### KupujemProdajem credentials:
-
-In the project's root folder `../kupujem-prodajem` find the file `cypress.env.json` and open it.
-Enter the valid login credentials inside the quotation marks for the existing account.
-
-#### Facebook credentials:
+The precondition for successful login is to have KupujemProdajem and Facebook accounts created using the same email address.
 
 In the project's root folder `../kupujem-prodajem` find the file `.env` and open it.
-Enter the valid login credentials right after `=`s. No additional characters like `"`, `,`, `;` or spaces are needed.
+Enter the valid Facebook login credentials like in the example below:
+
+```
+FB_EMAIL=testexample0@gmail.com
+FB_PASSWORD=testexample0
+```
+
+The KupujemProdajem credentials are not needed, because the accounts will be synced right after Facebook login.
 
 ### 2. Creation of an Ad
 
@@ -94,61 +96,53 @@ Replace `AD_NAME` with the desired object name. This name will be later used for
 
 An explanation for each `key: value`:
 
-| Key:         | `title`             |
-| ------------ | ------------------- |
-| Type:        | `string`            |
-| Description: | Enter the ad title. |
+| Key:   | `title`                         |
+| ------ | ------------------------------- |
+| Value: | Enter the ad title as a string. |
 
-| Key:         | `type`                                               |
-| ------------ | ---------------------------------------------------- |
-| Type:        | `number`                                             |
-| Description: | Enter one of the following depending on the ad type: |
-|              | `TYPE.stvar` = Stvar / Article                       |
-|              | `TYPE.usluga` = Usluga / Service (not tested)        |
-|              | `TYPE.posao` = Posao / Job (not tested)              |
+| Key:   | `type`                                               |
+| ------ | ---------------------------------------------------- |
+| Value: | Enter one of the following depending on the ad type: |
+|        | `TYPE.stvar` = Stvar / Article                       |
+|        | `TYPE.usluga` = Usluga / Service (not tested)        |
+|        | `TYPE.posao` = Posao / Job (not tested)              |
 
-| Key:         | `category`                                                                                                                               |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Type:        | `string`                                                                                                                                 |
-| Description: | Enter the category name. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which categories are available. |
+| Key:   | `category`                                                                                                                                           |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Value: | Enter the category name as a string. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which categories are available. |
 
-| Key:         | `group`                                                                                                                                             |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Type:        | `string`                                                                                                                                            |
-| Description: | Enter the category group name. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which category groups are available. |
+| Key:   | `group`                                                                                                                                                         |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Value: | Enter the category group name as a string. Visit the [KupujemProdajem](https://novi.kupujemprodajem.com/) site to find out which category groups are available. |
 
-| Key:         | `price`          |
-| ------------ | ---------------- |
-| Type:        | `string`         |
-| Description: | Enter the price. |
+| Key:   | `price`                      |
+| ------ | ---------------------------- |
+| Value: | Enter the price as a string. |
 
-| Key:         | `currency`                                            |
-| ------------ | ----------------------------------------------------- |
-| Type:        | `string`                                              |
-| Description: | Choose the currency by entering one of the following: |
-|              | `CURRENCY.rsd` = Serbian Dinar                        |
-|              | `CURRENCY.eur` = Euro                                 |
+| Key:   | `currency`                                            |
+| ------ | ----------------------------------------------------- |
+| Value: | Choose the currency by entering one of the following: |
+|        | `CURRENCY.rsd` = Serbian Dinar                        |
+|        | `CURRENCY.eur` = Euro                                 |
 
-| Key:         | `condition`                                                                              |
-| ------------ | ---------------------------------------------------------------------------------------- |
-| Type:        | `number`                                                                                 |
-| Description: | Choose the condition of an article by entering one of the following:                     |
-|              | `CONDITION.kaoNovo` = Kao novo (Nekorišćeno) / Like New (Unused)                         |
-|              | `CONDITION.korisceno` = Korišćeno (Ispravno) / Used (Correct)                            |
-|              | `CONDITION.osteceno` = Oštećeno (Neispravno) / Damaged (Faulty)                          |
-|              | `CONDITION.novo` = Novo (Samo za firme) / New (Only for the Companies)                   |
-|              | `undefined` = in case the condition option is unavailable (depending on the ad category) |
+| Key:   | `condition`                                                                              |
+| ------ | ---------------------------------------------------------------------------------------- |
+| Value: | Choose the condition of an article by entering one of the following:                     |
+|        | `CONDITION.kaoNovo` = Kao novo (Nekorišćeno) / Like New (Unused)                         |
+|        | `CONDITION.korisceno` = Korišćeno (Ispravno) / Used (Correct)                            |
+|        | `CONDITION.osteceno` = Oštećeno (Neispravno) / Damaged (Faulty)                          |
+|        | `CONDITION.novo` = Novo (Samo za firme) / New (Only for the Companies)                   |
+|        | `undefined` = in case the condition option is unavailable (depending on the ad category) |
 
-| Key:         | `description`                                                                       |
-| ------------ | ----------------------------------------------------------------------------------- |
-| Type:        | `string`                                                                            |
-| Description: | Enter the ad description. Type `\n` instead of pressing the `Enter` for a new line. |
+| Key:           | `description`                                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Value:         | Enter the path of the `.txt` file which contains the ad description. The display of description text will be exactly as it's in the `.txt` file. |
+| Value example: | `"cypress/fixtures/ad_folder/text.txt"`                                                                                                          |
 
-| Key:           | `imageFiles`                                                                                                                                       |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Type:          | `string`                                                                                                                                           |
-| Description:   | Add ad photos. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. Max number of photos is 20. |
-| Value example: | `["cypress/fixtures/"ad_folder"/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                                               |
+| Key:           | `imageFiles`                                                                                                                                                    |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Value:         | Add ad photos to the array. The photos must be placed in the project, located in the folder `../kupujem-prodajem/cypress/fixtures`. Max number of photos is 20. |
+| Value example: | `["cypress/fixtures/ad_folder/"image_name1.jpg", "cypress/fixtures/"ad_folder"/"image_name2.jpg"]`                                                              |
 
 After we entered all the ad object values, next we have to open the file `automatedAdPosting.cy.js` located in the folder `../kupujem-prodajem/cypress/e2e/`. There are already a couple of examples in the file. If we look at the examples we'll notice that every ad is an `it()` block in which we're calling a method. The method is called by typing:
 
@@ -156,13 +150,13 @@ After we entered all the ad object values, next we have to open the file `automa
 postavljanjeOglasaPage.postAd()
 ```
 
-The method accepts only one parameter. Enter `adObject.` and select one of the existing ad objects by the object name (`AD_NAME`).
+The method accepts only one parameter. Type `adObject.` and select one of the existing ad objects by the object name (`AD_NAME`).
 
 If there are any ambiguities, analyze the existing examples.
 
 ### 3. Ad Posting
 
-After the ads are implemented, Automated Ad Posting can be launched. Enter the following command in the terminal:
+After the ads are implemented, KP Automated Ad Posting can be launched. Enter the following command in the terminal:
 
 ```
 npm run cypress

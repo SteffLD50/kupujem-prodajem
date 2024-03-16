@@ -1,6 +1,31 @@
 # Changelog
 
-## 1.1.1 - 2024/02/19
+## 0.0.5 - 2024/03/16
+
+### Bugfixes:
+
+-   Test crashes during login and ad posting. The login command `loginViaPuppeteer` and ad posting method `postAd()` weren't working because [KupujemProdajem](https://www.kupujemprodajem.com/) made some changes on the site. I made the necessary adjustments to make it work again.
+
+### Changed:
+
+-   Adjustments for entering the description in the `postAd()` method. Every ad description is now stored in a separate `.txt` file. The display of the description will be exactly as it's in the `.txt` file. As a description value, we pass the `.txt` file path. The result of this change is clearer code, a more user-friendly addition of description, and also this way a lot less time is needed for tests to execute, especially when there are extensive descriptions.
+
+##### The Wider Explanation:
+
+Instead of `.type()`, now is used the `.invoke()` function that directly copies and pastes all of the text from the `.txt` file into the description field. The problem occurred when the text was pasted into the description field. All the text was displayed in one line. It was united on the places where the new lines should've been. I noticed that every new line in the iframe description field is a new paragraph (`<p>`). So I figured out to split the text from the `.txt` file on the places where there are new lines and save every line separately into the array. Then I counted how many lines have the array and then made that many lines/paragraphs in the description field. In the end, I just pasted all the lines into the empty paragraphs.
+
+-   Adjustments in the `postAd()` method in the category selection section. Four getters became unneeded and thus deleted.
+-   All the comment explanations are translated into English.
+-   I realized that I made a mistake in software versioning. Since this is just a work-in-progress project and it's not officially released as software - the first digit in the software version number must be "0" (until now it was "1"). The second digit changes when the new feature is added, and the third digit changes when there are any other changes or bug fixes made.
+
+### Dependency Updates:
+
+-   Cypress, Version: from 13.6.4 to 13.7.0
+-   Cypress-mochawesome-reporter, Version: from 3.8.1 to 3.8.2
+-   dotenv, Version: from 16.4.3 to 16.4.5
+-   Puppeteer, Version: from 22.0.0 to 22.5.0
+
+## 0.0.4 - 2024/02/19
 
 ### Bugfixes:
 
@@ -10,7 +35,7 @@
 
 Every image upload is a POST request. Also, while the page loads there are additional requests that are sent in the background. When we upload 8 or more images at once, sometimes Cypress isn't able to catch every request. So later when we do the `cy.wait()` to check if all the images are uploaded, there is a possibility that the test will fail, because, for example, if we upload 12 images at once, Cypress will catch only 9.
 
--   Improved the modal window bugfix from version [ 1.0.2 ](#102---20231216).
+-   Improved the modal window bugfix from version [ 0.0.2 ](#102---20231216).
 
 ### Changed:
 
@@ -26,21 +51,14 @@ Every image upload is a POST request. Also, while the page loads there are addit
 -   dotenv, Version: from 16.3.1 to 16.4.3
 -   Puppeteer, Version: from 21.6.1 to 22.0.0
 
-## 1.1.0 - 2023/12/19
-
-### Features:
-
--   The new method for posting ads.
-
-##### The Explanation:
-
-The previous version of the app used the `postavljanjeOglasa()` method which asked for 9 parameters. This version uses the `postAd()` method which asks for only 1 parameter - an object with all the data for the specific ad. Every ad object is defined and exported from the `adData.js` file. The result is clearer code, fewer lines of code, and a little bit easier usage of the application.
+## 0.0.3 - 2023/12/19
 
 ### Changed:
 
+-   The adjusted method for posting ads. Previously was used the `postavljanjeOglasa()` method which asked for 9 parameters. Now is used the adjusted `postAd()` method which asks for only 1 parameter - an object with all the data for the specific ad. Every ad object is defined and exported from the `adData.js` file. The result is clearer code, fewer lines of code, and a little bit easier usage of the application.
 -   Adapted instruction information in the `README.md` file according to the new feature addition.
 
-## 1.0.2 - 2023/12/16
+## 0.0.2 - 2023/12/16
 
 ### Bugfixes:
 
@@ -56,7 +74,7 @@ The previous version of the app used the `postavljanjeOglasa()` method which ask
 -   Cypress, Version: from 13.6.0 to 13.6.1
 -   Puppeteer, Version: from 21.5.2 to 21.6.1
 
-## 1.0.1 - 2023/12/04
+## 0.0.1 - 2023/12/04
 
 ### Bugfixes:
 
@@ -74,7 +92,7 @@ The Cypress is only able to run in one browser window and can't interact with ot
 
 ##### The Solution:
 
-The last solution was to try to use another test automation framework that can interact with multiple browser windows. But I didn't want to abandon the Cypress completely. So the middle solution was to run the Puppeteer test framework through the `cy.task()`. It was a bit of a challenge because I had to learn how to write the code for the Puppeteer which I was using for the first time. In the end, I managed to implement a code that did a login via Facebook and saved the needed cookies in the "cookies.json" file from which I later set the cookies in the Cypress browser. Also, in order for the cookies to work, we must choose one browser for running the Puppeteer and the Cypress. Example: If the cookies are saved through Electron, they can't be later reused in Chrome or Mozilla...
+The last solution was to try to use another test automation framework that can interact with multiple browser windows. But I didn't want to abandon the Cypress completely. So the middle solution was to run the Puppeteer test framework through the `cy.task()`. It was a bit of a challenge because I had to learn how to write the code for the Puppeteer which I was using for the first time. In the end, I managed to implement a code that did a login via Facebook and saved the needed cookies in the "cookies.json" file from which I later set the cookies in the Cypress browser. Also, the cookies can't be used in different browsers. For example, if the cookies are saved through Electron, they can't be later reused in Chrome or Mozilla... So, in this case, I have chosen the Electron for running Cypress and Puppeteer.
 
 -   Solved the occasional test fail due to the "ResizeObserver loop limit exceeded" error by implementing a code in the `cypress/support/e2e.js`.
 

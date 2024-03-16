@@ -1,7 +1,7 @@
 class HomePage {
     get sidebarUlogujteSeBtn() {
         return cy
-            .get(".MyKpMenu_lockedMyKpList__9uzza")
+            .get(".MyKpMenu_lockedMyKpList__iG4lO")
             .find('button[aria-label="Ulogujte se"]');
     }
 
