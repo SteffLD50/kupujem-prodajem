@@ -1,6 +1,6 @@
 {
-    "name": "kupujemprodajem",
-    "version": "0.1.2",
+    "name": "kpautoadposting",
+    "version": "0.0.5",
     "description": "Tool for posting and reposting ads on site 'KupujemProdajem'",
     "main": "index.js",
     "scripts": {
