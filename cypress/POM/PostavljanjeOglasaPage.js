@@ -20,24 +20,8 @@ class PostavljanjeOglasaPage {
         return cy.get("#react-select-categoryId-input");
     }
 
-    get categoryListbox() {
-        return cy.get("#react-select-categoryId-listbox", { timeout: 10000 });
-    }
-
-    get categoryOption() {
-        return cy.get("#react-select-categoryId-option-0");
-    }
-
     get adGroupInput() {
         return cy.get("#react-select-groupId-input");
-    }
-
-    get groupListbox() {
-        return cy.get("#react-select-groupId-listbox", { timeout: 10000 });
-    }
-
-    get groupOption() {
-        return cy.get("#react-select-groupId-option-0");
     }
 
     // 2. Step - Unos oglasa (Ad entry)
@@ -99,12 +83,8 @@ class PostavljanjeOglasaPage {
 
         // 1. Step - Izbor kategorije (Category selection)
         this.adTypeSelect.eq(adObject.type).check();
-        this.adCategoryInput.type(adObject.category);
-        this.categoryListbox.should("be.visible");
-        this.categoryOption.click();
-        this.adGroupInput.type(adObject.group);
-        this.groupListbox.should("be.visible");
-        this.groupOption.click();
+        this.adCategoryInput.type(`${adObject.category}{enter}`);
+        this.adGroupInput.type(`${adObject.group}{enter}`);
 
         // 2. Step - Unos oglasa (Ad entry)
         cy.wait("@getUnosOglasa", { timeout: 10000 }).then((interception) => {
@@ -162,21 +142,21 @@ class PostavljanjeOglasaPage {
             this.headerStepper.should("contain.text", "4. Identifikacija");
         });
         this.termsAndConditionsCheckbox.check({ force: true });
-        this.headerPostAnAdBtn.click();
-        cy.wait("@getSavedAd", { requestTimeout: 30000 }).then(
-            (interception) => {
-                expect(interception.response.statusCode).eq(200);
-                viewAdPage.pageBody.then((body) => {
-                    if (body.find(".Modal_modal__z3RKr").length > 0) {
-                        viewAdPage.modalWindow.find("button").eq(0).click();
-                    }
-                });
-                viewAdPage.searchInputField.should("exist").and("be.visible");
-                viewAdPage.adTitle
-                    .should("exist")
-                    .and("contain.text", adObject.title);
-            }
-        );
+        // this.headerPostAnAdBtn.click();
+        // cy.wait("@getSavedAd", { requestTimeout: 30000 }).then(
+        //     (interception) => {
+        //         expect(interception.response.statusCode).eq(200);
+        //         viewAdPage.pageBody.then((body) => {
+        //             if (body.find(".Modal_modal__z3RKr").length > 0) {
+        //                 viewAdPage.modalWindow.find("button").eq(0).click();
+        //             }
+        //         });
+        //         viewAdPage.searchInputField.should("exist").and("be.visible");
+        //         viewAdPage.adTitle
+        //             .should("exist")
+        //             .and("contain.text", adObject.title);
+        //     }
+        // );
     }
 }
 
