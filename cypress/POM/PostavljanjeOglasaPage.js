@@ -11,7 +11,7 @@ class PostavljanjeOglasaPage {
             .find("button[type='submit']");
     }
 
-    // 1. Korak - Izbor kategorije
+    // 1. Step - Izbor kategorije (Category selection)
     get adTypeSelect() {
         return cy.get(".AdSaveStepOne_adKindButtonGroup__vF7te").find("input");
     }
@@ -40,7 +40,7 @@ class PostavljanjeOglasaPage {
         return cy.get("#react-select-groupId-option-0");
     }
 
-    // 2. Korak - Unos oglasa
+    // 2. Step - Unos oglasa (Ad entry)
     get imageUploadInput() {
         return cy.get("input[type='file']").eq(1);
     }
@@ -65,7 +65,7 @@ class PostavljanjeOglasaPage {
         return cy.get(".ProgressBar_progressBar__uhYBn");
     }
 
-    // 3. Korak - Izbor promocije
+    // 3. Step - Izbor promocije (Choice of promotion)
     get standardVisibility() {
         return cy
             .get(".Promotion_promoItem__aFVdo")
@@ -73,7 +73,7 @@ class PostavljanjeOglasaPage {
             .find("button[type='button']");
     }
 
-    // 4. Korak - Identifikacija
+    // 4. Step - Identifikacija (Identification)
     get termsAndConditionsCheckbox() {
         return cy.get("#acceptyes");
     }
@@ -97,7 +97,7 @@ class PostavljanjeOglasaPage {
             "getSavedAd"
         );
 
-        // 1. Korak - Izbor kategorije
+        // 1. Step - Izbor kategorije (Category selection)
         this.adTypeSelect.eq(adObject.type).check();
         this.adCategoryInput.type(adObject.category);
         this.categoryListbox.should("be.visible");
@@ -106,7 +106,7 @@ class PostavljanjeOglasaPage {
         this.groupListbox.should("be.visible");
         this.groupOption.click();
 
-        // 2. Korak - Unos oglasa
+        // 2. Step - Unos oglasa (Ad entry)
         cy.wait("@getUnosOglasa", { timeout: 10000 }).then((interception) => {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "2. Unos oglasa");
@@ -118,7 +118,8 @@ class PostavljanjeOglasaPage {
         this.adPriceInput.type(adObject.price);
         this.currencySelect.find(`input[value=${adObject.currency}]`).check();
 
-        // U zavisnosti od odabrane kategorije oglasa, biće dostupno/nedostupno označavanje stanja predmeta
+        // Depending on the selected ad category,
+        // item condition flagging will be available/unavailable
         cy.get("body").then((body) => {
             if (
                 body.find(".AdSaveCondition_conditionHolder__fvNkq").length > 0
@@ -128,7 +129,8 @@ class PostavljanjeOglasaPage {
         });
         cy.getIframe("#text-field-editor_ifr").type(adObject.description);
 
-        // Pre nego što pređemo na sledeći korak, čekamo da se završi upload-ovanje svih slika
+        // Before moving on to the next step,
+        // we wait for the uploading of all images to finish.
         cy.wait(uploadingImages.slice(0, 8), { requestTimeout: 30000 }).then(
             () => {
                 this.imageUploadProgressBar.should("not.exist");
@@ -146,7 +148,7 @@ class PostavljanjeOglasaPage {
         );
         this.headerNextBtn.click();
 
-        // 3. Korak - Izbor promocije
+        // 3. Step - Izbor promocije (Choice of promotion)
         cy.wait("@getUnosOglasa").then((interception) => {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "3. Izbor promocije");
@@ -154,7 +156,7 @@ class PostavljanjeOglasaPage {
         this.standardVisibility.click();
         this.headerNextBtn.click();
 
-        // 4. Korak - Identifikacija
+        // 4. Step - Identifikacija (Identification)
         cy.wait("@getUnosOglasa").then((interception) => {
             expect(interception.response.statusCode).eq(200);
             this.headerStepper.should("contain.text", "4. Identifikacija");
