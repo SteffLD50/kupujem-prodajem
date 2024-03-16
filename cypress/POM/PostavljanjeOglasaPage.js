@@ -2,18 +2,18 @@ import { viewAdPage } from "./ViewAdPage";
 
 class PostavljanjeOglasaPage {
     get headerStepper() {
-        return cy.get(".AdSave_navigationTopHolder__hEERw");
+        return cy.get(".AdSave_navigationTopHolder__EqZX0");
     }
 
     get headerNextBtn() {
         return cy
-            .get(".AdSave_navigationTopHolder__hEERw")
+            .get(".AdSave_navigationTopHolder__EqZX0")
             .find("button[type='submit']");
     }
 
     // 1. Korak - Izbor kategorije
     get adTypeSelect() {
-        return cy.get(".AdSaveStepOne_adKindButtonGroup__TKAq0").find("input");
+        return cy.get(".AdSaveStepOne_adKindButtonGroup__vF7te").find("input");
     }
 
     get adCategoryInput() {
@@ -54,21 +54,21 @@ class PostavljanjeOglasaPage {
     }
 
     get currencySelect() {
-        return cy.get(".AdSaveStepTwo_currency__BUOIN");
+        return cy.get(".AdSaveStepTwo_currency__HjUtK");
     }
 
     get conditionSelect() {
-        return cy.get(".AdSaveCondition_conditionHolder__Bo1M7").find("button");
+        return cy.get(".AdSaveCondition_conditionHolder__fvNkq").find("button");
     }
 
     get imageUploadProgressBar() {
-        return cy.get(".ProgressBar_progressBar__y8dMA");
+        return cy.get(".ProgressBar_progressBar__uhYBn");
     }
 
     // 3. Korak - Izbor promocije
     get standardVisibility() {
         return cy
-            .get(".Promotion_promoItem__tFpMY")
+            .get(".Promotion_promoItem__aFVdo")
             .eq(0)
             .find("button[type='button']");
     }
@@ -80,7 +80,7 @@ class PostavljanjeOglasaPage {
 
     get headerPostAnAdBtn() {
         return cy
-            .get(".AdSave_navigationTopHolder__hEERw")
+            .get(".AdSave_navigationTopHolder__EqZX0")
             .find("button[type='submit']");
     }
 
@@ -93,7 +93,7 @@ class PostavljanjeOglasaPage {
             "getUnosOglasa"
         );
         cy.intercept("POST", `${Cypress.env("apiUrl")}/file`).as("uploadImage");
-        cy.intercept("GET", `${Cypress.env("apiUrl")}/poll/ad-view`).as(
+        cy.intercept("POST", `${Cypress.env("apiUrl")}/banners/show-track`).as(
             "getSavedAd"
         );
 
@@ -121,7 +121,7 @@ class PostavljanjeOglasaPage {
         // U zavisnosti od odabrane kategorije oglasa, biće dostupno/nedostupno označavanje stanja predmeta
         cy.get("body").then((body) => {
             if (
-                body.find(".AdSaveCondition_conditionHolder__Bo1M7").length > 0
+                body.find(".AdSaveCondition_conditionHolder__fvNkq").length > 0
             ) {
                 this.conditionSelect.eq(adObject.condition).click();
             }
@@ -165,7 +165,7 @@ class PostavljanjeOglasaPage {
             (interception) => {
                 expect(interception.response.statusCode).eq(200);
                 viewAdPage.pageBody.then((body) => {
-                    if (body.find(".Modal_modal__ZLQzH").length > 0) {
+                    if (body.find(".Modal_modal__z3RKr").length > 0) {
                         viewAdPage.modalWindow.find("button").eq(0).click();
                     }
                 });

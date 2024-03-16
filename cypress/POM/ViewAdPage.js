@@ -12,7 +12,7 @@ class ViewAdPage {
     }
 
     get modalWindow() {
-        return cy.get(".Modal_modal__ZLQzH");
+        return cy.get(".Modal_modal__z3RKr");
     }
 }
 
