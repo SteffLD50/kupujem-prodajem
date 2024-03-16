@@ -8,11 +8,11 @@
 
 ### Changed:
 
--   Adjustments in the `postAd()` method in the add of the description section. Every ad description is now stored in a separate `.txt` file. The display of the description will be exactly as it's in the `.txt` file. As a description value, we pass the `.txt` file path. The result of this change is clearer code and a more user-friendly addition of description, and also this way a lot less time is needed for tests to execute, especially when there are extensive descriptions.
+-   Adjustments for entering the description in the `postAd()` method. Every ad description is now stored in a separate `.txt` file. The display of the description will be exactly as it's in the `.txt` file. As a description value, we pass the `.txt` file path. The result of this change is clearer code, a more user-friendly addition of description, and also this way a lot less time is needed for tests to execute, especially when there are extensive descriptions.
 
-##### The Explanation:
+##### The Wider Explanation:
 
-Instead of `.type()`, now is used the `.invoke()` function that directly copies and pastes all of the text from the `.txt` file into the description field. The problem occurred when the text was pasted into the description field. All the text was displayed in one line. It was united on the places where the new lines should've been. I noticed that every new line in the iframe description field is a new paragraph (`<p>`). So I figured out to split the text from the `.txt` file on the places where there are new lines and save every line into the array. Then I counted how many lines have the array and then made that many lines in the description field. In the end, I just pasted every line into the empty paragraphs.
+Instead of `.type()`, now is used the `.invoke()` function that directly copies and pastes all of the text from the `.txt` file into the description field. The problem occurred when the text was pasted into the description field. All the text was displayed in one line. It was united on the places where the new lines should've been. I noticed that every new line in the iframe description field is a new paragraph (`<p>`). So I figured out to split the text from the `.txt` file on the places where there are new lines and save every line separately into the array. Then I counted how many lines have the array and then made that many lines/paragraphs in the description field. In the end, I just pasted all the lines into the empty paragraphs.
 
 -   Adjustments in the `postAd()` method in the category selection section. Four getters became unneeded and thus deleted.
 -   All the comment explanations are translated into English.
